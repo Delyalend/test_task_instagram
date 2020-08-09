@@ -1,0 +1,369 @@
+<style>
+
+
+   .container-1 {
+   display: grid;
+   grid-template-columns: 1fr 2fr 1.5fr 4fr 1.5fr 26px 25px 26px 25px 26px 25px 26px 25px 26px 1fr;
+   grid-template-rows: 24px 5px 5px;
+   grid-template-areas:
+   ". icon . search . home . direct . explore . like . profile ."
+   ". . . modalSearch . . . . . . . . . . ."
+   ". . . window_users  . . . . . . . . . . .";
+   justify-items: center;
+   }
+
+   .conatiner-2 {
+   	display: grid;
+   	background-color: #fafafa;
+   	grid-template-columns: 20% 0fr 4fr 20%;
+   	grid-template-rows: 20px 600px 20px;
+   	grid-template-areas:
+   	". . . ."
+   	". direct-panel message-panel ."
+   	". . . .";
+
+   }
+
+   .border_bottom {
+   	border-bottom:1px solid #BABABA;
+   }
+
+
+   .direct-panel {
+   	grid-area: direct-panel;
+   	width: 350px;
+   	height: 600px;
+   	border:1px solid #BABABA;
+   	border-top-left-radius: 3px;
+   	border-bottom-left-radius: 3px;
+   	background-color: #ffffff;
+	overflow-y: auto;
+   }
+
+   .message-panel {
+   	grid-area: message-panel;
+   	width: 700px;
+   	height: 600px;
+    border-top: 1px solid #BABABA;
+    border-right: 1px solid #BABABA;
+    border-bottom: 1px solid #BABABA;
+    border-top-right-radius: 3px;
+   	border-bottom-right-radius: 3px;
+   	background-color: #ffffff;
+   }
+
+   message_panel_header {
+
+   }
+
+
+   .container_direct_panel {
+   	 display: grid;
+   	 grid-template-rows: 20px 20px 20px;
+   	 grid-template-columns: 40% 60% 0%;
+   	 grid-template-areas:
+   	 ". . ."
+   	 ". header_direct_panel ."
+   	 ". . .";
+   }
+
+   .container_message_panel_default {
+   display: grid;
+   grid-template-rows: 300px 0px 200px;
+   grid-template-columns: 40% 60%;
+   grid-template-areas:
+   ". ."
+   ". header_message_panel_default"
+   ". .";
+   }
+
+   .header_message_panel_default{
+   	grid-area: header_message_panel_default;
+   	font-size:25px;
+   }
+
+
+   .header_direct_panel {
+   	grid-area: header_direct_panel;
+   	font-size: 20px;
+   }
+
+   .modal-search {
+   display: grid;
+   grid-template-columns: 1fr 195px 50px;
+   grid-template-rows: 10px 25px 10px;
+   grid-template-areas:
+   ". . ."
+   ". label_subscribers ."
+   ". . .";
+   }
+
+   .modalSearch {
+   display: none;
+   margin-top: 20px;
+   z-index: 200;
+   background-color: white;
+   height: 370px;
+   width: 225px;
+   opacity: 1;
+   overflow-y: scroll;
+   overflow-x:hidden;
+   grid-area: modalSearch;
+   border-width: 1px;
+   border-style: solid;
+   border-color: #7C808A;
+   border-radius: 4px;
+   }
+
+   .top-color {
+   background-color: #ffffff;
+   }
+   .home {
+   background-image: url(https://i.ibb.co/1vRDWDm/home-run.png);
+   background-repeat: no-repeat; /*Убираем повтор изображения*/
+   border: none;
+   grid-area: home;
+   width: 26px;
+   background-color: white;
+   }
+   .direct {
+   background-image: url(https://i.ibb.co/mSWvgNq/telegram.png);
+   background-repeat: no-repeat; /*Убираем повтор изображения*/
+   border: none;
+   grid-area: direct;
+   width: 26px;
+   background-color: white;
+   }
+   .explore {
+   background-image: url(https://i.ibb.co/hDnNssy/compass.png);
+   background-repeat: no-repeat; /*Убираем повтор изображения*/
+   border: none;
+   grid-area: explore;
+   width: 26px;
+   background-color: white;
+   }
+   .like {
+   background-image: url(https://i.ibb.co/4FpNSgc/heart.png);
+   background-repeat: no-repeat; /*Убираем повтор изображения*/
+   border: none;
+   grid-area: like;
+   width: 26px;
+   background-color: white;
+   }
+   .profile {
+   background-image: url(https://i.ibb.co/NWGSMjQ/user.png);
+   background-repeat: no-repeat; /*Убираем повтор изображения*/
+   border: none;
+   grid-area: profile;
+   width: 26px;
+   background-color: white;
+   }
+   .search {
+   background-image: url(https://i.ibb.co/XFYSZy5/loupe-2.png); /*лупа*/
+   background-repeat: no-repeat; /*Убираем повтор изображения*/
+   background-position: 4px; /*Позиционируем*/
+   border-radius: 4px;
+   padding-left: 25px;
+   grid-area: search;
+   width: 200px;
+   }
+   .icon{
+   grid-area: icon;
+   }
+   hr {
+   margin-bottom: 0px;
+   margin-top: 0px;
+   }
+   .container_user {
+   	display: grid;
+   	grid-template-columns: 5% 20% 75%;
+   	grid-template-rows: 10px 15px 15px 15px 15px 10px;
+   	grid-template-areas:
+   	". . ."
+   	". user_icon ."
+   	". user_icon nickname"
+   	". user_icon ."
+   	". user_icon ."
+   	". . .";
+   }
+   .round{
+   	width: 60px;
+   	height: 60px;
+   	border-radius:100px;
+   	grid-area: user_icon;
+   }
+   .nickname {
+   	font-size: 18px;
+   	grid-area: nickname;
+   }
+   .selectUser {
+   	background-color: #F7F7F7;
+   }
+</style>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Direct · Instagram</title>
+</head>
+<body>
+<div class="container-1 top-color">
+    <img class="icon" src="https://i.ibb.co/84TX9S2/735145cfe0a4.png">
+    <input type="button" class="home">
+    <input type="button" class="direct" onclick="goToDirect()">
+    <input type="button" class="explore">
+    <input type="button" class="like">
+    <input type="button" class="profile" onclick="goToProfile()">
+</div>
+<hr class="main-color">
+
+<div class="conatiner-2">
+    <div class="direct-panel">
+        <div class="container_direct_panel border_bottom">
+            <div class="header_direct_panel">Direct</div>
+        </div>
+        <div class="container_user" onmouseenter="enterUser(this)" onmouseleave="leaveUser(this)" onclick="clickUser(this)" value="">
+            <img class="round" src="https://i.ibb.co/NWGSMjQ/user.png">
+            <label class="nickname">some nickname</label>
+        </div>
+    </div>
+
+    <div class="message-panel">
+        <div class="container_message_panel_default">
+            <div class="header_message_panel_default">
+                Ваши сообщения
+            </div>
+        </div>
+
+    </div>
+
+    <input hidden="hidden" th:value="${iam.username}" id="iam">
+
+    <button onclick="sendAndGetListChats()">ClickMe!</button>
+
+</div>
+<script th:src="@{/webjars/stomp-websocket/2.3.3-1/stomp.js}" type="text/javascript"></script>
+
+<script>
+'use strict';
+
+document.addEventListener("DOMContentLoaded", () => {
+    connect()
+  });
+
+let stompClient = null
+let username = 'test'
+
+
+function sendAndGetListChats() {
+    stompClient.send('/app/stompDirect.getChats')
+
+}
+
+function connect(event) {
+        stompClient = Stomp.client('ws://localhost:8080/stompDirect')
+
+
+ let promise = new Promise((resolve, reject) => {
+     stompClient.connect({}, function () {
+         stompClient.subscribe('/topic/stompDirect', onMessageReceived)
+         resolve()
+     })
+ })
+
+promise
+    .then(
+        result => {
+            stompClient.send('/app/stompDirect.getChats')
+        },
+        error => {
+            console.log("rejected: " + reject)
+        })
+
+
+//     promise
+//         .then(
+//             result => {
+//                 console.log('выполнил send')
+//                 stompClient.send('/app/stompDirect.getChats',{},JSON.stringify({username:'testUsername'}))
+//             },
+//                 error => {
+//                 console.log('rejected: ' + reject)
+//             }
+//         )
+
+        //stompClient.connect({}, onConnected, onError)
+}
+
+
+function onMessageReceived(payload) {
+console.log('получил сообщение!!!!')
+    let message = JSON.parse(payload.body);
+    console.log(message)
+}
+
+
+function onConnected() {
+console.log('фаза ОнКоннектед!')
+    stompClient.subscribe('/topic/stompDirect', onMessageReceived);
+    console.log('фаза ОнКоннектед2!')
+    stompClient.send("/app/stompDirect.getChats",
+        {},
+        JSON.stringify({username: 'testUsername'})
+    )
+    console.log('фаза онКоннектед закончилась!')
+}
+
+function onError(error) {
+}
+
+
+
+function sendMessage(event) {
+        let chatMessage = {
+            username: 'testUsername_1'
+        };
+        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+}
+
+
+function goToProfile() {
+let username = document.getElementById('iam')
+document.location.replace('http://localhost:8080/' + username.value + '/');
+}
+
+
+let selectedUser
+
+function enterUser(user) {
+	if(user.value != 'selected') {
+		user.style.background="#F7F7F7"
+	}
+}
+
+function leaveUser(user) {
+	if(user.value != 'selected') {
+		user.style.background="#ffffff"
+	}
+}
+
+function clickUser(user) {
+
+	if(selectedUser!=null) {
+		selectedUser.style.background="#ffffff"
+		selectedUser.value = ''
+	}
+
+	user.value = 'selected'
+	selectedUser = user
+	user.style.background="#efefef"
+
+}
+
+
+
+     </script>
+
+</body>
+</html>

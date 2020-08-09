@@ -1,0 +1,640 @@
+<style>
+
+.container-1 {
+	display: grid;
+	grid-template-columns: 1fr 2fr 1.5fr 4fr 1.5fr 26px 25px 26px 25px 26px 25px 26px 25px 26px 1fr;
+	grid-template-rows: 24px 5px 5px;
+	grid-template-areas:
+	". icon . search . home . direct . explore . like . profile ."
+	". . . modalSearch . . . . . . . . . . ."
+	". . . window_users  . . . . . . . . . . .";
+	justify-items: center;
+}
+
+.container-2 {
+	display: grid;
+	grid-template-rows: 20px 42px 42px 42px 20px;
+	grid-template-columns: 30% 150px 130px 10px 55px 5px 55px 10px 130px;
+	grid-template-areas:
+	". . . . . . . . ."
+	". profileIcon username username username . editProfile editProfile editProfile"
+	". profileIcon publications . followers followers followers . follows"
+	". profileIcon name . . . . . ."
+	". . . . . . . . .";
+}
+
+
+.modal-search {
+	display: grid;
+	grid-template-columns: 1fr 195px 50px;
+	grid-template-rows: 10px 25px 10px;
+	grid-template-areas:
+	". . ."
+	". label_subscribers ."
+	". . .";
+}
+
+
+/* FOLLOW/FOLLOWER MODAL WINDOW - START */
+.window_users {
+	display: none;
+	z-index: 200;
+	background-color: white;
+	height: 424px;
+	width: 400px;
+	opacity: 1;
+	border-radius: 5px;
+    grid-area: window_users;
+    margin-top: 20%;
+}
+
+.header_fol_modal {
+	display: grid;
+	grid-template-columns: 1fr 195px 50px;
+	grid-template-rows: 10px 35px 2px 375px;
+	grid-template-areas:
+	". . ."
+	". label_subscribers close"
+	"hr_users hr_users hr_users"
+	"content_users content_users content_users";
+}
+
+.label_subscribers {
+	grid-area: label_subscribers;
+	font-size: 20px;
+	overflow-y: hidden;
+}
+
+.close {
+	background-image: url(https://i.ibb.co/0sK6LPB/4115230-cancel-close-cross-delete-114048.png);
+	border: none;
+	background-repeat: no-repeat;
+	width: 26px;
+	height: 26px;
+	grid-area: close;
+	background-color: white;
+}
+
+.content_users {
+	display: grid;
+	grid-area: content_users;
+	overflow-y: scroll;
+}
+
+.hr_users {
+	display: grid;
+	grid-area: hr_users;
+    width: 99%;
+    height: 0.00001px;
+}
+
+/* FOLLOW/FOLLOWER MODAL - END */
+
+
+
+
+
+	.modalSearch {
+	display: none;
+	margin-top: 20px;
+	z-index: 200;
+	background-color: white;
+	height: 370px;
+	width: 225px;
+	opacity: 1;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    grid-area: modalSearch;
+    border-width: 1px;
+	border-style: solid;
+	border-color: #7C808A;
+	border-radius: 4px;
+
+}
+
+.element-to-end {
+	display: grid;
+	justify-items: end;
+}
+
+.element-to-center {
+	display: grid;
+	justify-items:center;
+}
+
+.publications {
+	display: grid;
+	grid-area: publications;
+	font-size: 18px;
+}
+
+.followers {
+	display: grid;
+	grid-area: followers;
+	font-size: 18px;
+}
+
+.follows {
+	display: grid;
+	grid-area: follows;
+	font-size: 18px;
+}
+
+
+.editProfile {
+	grid-area: editProfile;
+	height: 25px;
+	width: 195px;
+	font-size: 15px;
+	background-color: #fafafa;
+	border-color: #b5b1b1;
+	border-radius: 3.5px;
+	border-style:solid;
+	border-width: 1px;
+	justify-items:end;
+}
+
+.top-color {
+	background-color: #ffffff;
+}
+
+.main-color {
+	background-color: #fafafa;
+}
+
+.home {
+	background-image: url(https://i.ibb.co/1vRDWDm/home-run.png);
+	background-repeat: no-repeat; /*Убираем повтор изображения*/
+	border: none;
+	grid-area: home;
+	width: 26px;
+	background-color: white;
+}
+
+.direct {
+	background-image: url(https://i.ibb.co/mSWvgNq/telegram.png);
+	background-repeat: no-repeat; /*Убираем повтор изображения*/
+	border: none;
+	grid-area: direct;
+	width: 26px;
+	background-color: white;
+}
+
+.explore {
+	background-image: url(https://i.ibb.co/hDnNssy/compass.png);
+	background-repeat: no-repeat; /*Убираем повтор изображения*/
+	border: none;
+	grid-area: explore;
+	width: 26px;
+	background-color: white;
+}
+
+.like {
+	background-image: url(https://i.ibb.co/4FpNSgc/heart.png);
+	background-repeat: no-repeat; /*Убираем повтор изображения*/
+	border: none;
+	grid-area: like;
+	width: 26px;
+	background-color: white;
+}
+
+.profile {
+	background-image: url(https://i.ibb.co/NWGSMjQ/user.png);
+	background-repeat: no-repeat; /*Убираем повтор изображения*/
+	border: none;
+	grid-area: profile;
+	width: 26px;
+	background-color: white;
+}
+
+.search {
+	background-image: url(https://i.ibb.co/XFYSZy5/loupe-2.png); /*лупа*/
+	background-repeat: no-repeat; /*Убираем повтор изображения*/
+	background-position: 4px; /*Позиционируем*/
+	border-radius: 4px;
+	padding-left: 25px;
+	grid-area: search;
+	width: 200px;
+}
+
+.profileIcon {
+	display: none;
+	border-radius: 90px;
+	width: 128px;
+	height: 128px;
+
+}
+
+.item {
+	grid-area: profileIcon;
+}
+
+input {
+	outline:none;
+}
+
+.name {
+	grid-area: name;
+	font-size: 18px;
+}
+
+.username {
+	grid-area: username;
+	font-size: 25px;
+}
+
+.icon{
+	grid-area: icon;
+}
+
+.modalSubscriber {
+	display: none;
+	background-color: white;
+	justify-content: center;
+}
+
+.modalSubscription {
+	display: none;
+}
+
+hr {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+.substrate {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	z-index: 100;
+	opacity: 0.6;
+}
+
+.transparent-substrate {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	opacity: 0.6;
+}
+
+.user {
+    height:25px;
+}
+
+
+
+
+</style>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.username}">username</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container-1 top-color">
+    <img class="icon" src="https://i.ibb.co/84TX9S2/735145cfe0a4.png">
+
+    <input class="search"  id="search" onkeyup="onKeyUp()" value="" onfocus="searchInFocus()">
+
+    <!--Поиск-->
+    <div class="modalSearch" id="searchModal" onblur="closeModalSearch()">
+        <div id="ListOfUsers">
+        </div>
+    </div>
+
+    <!--Подписчики-->
+    <div class="window_users" id="modalFollowers">
+        <div class="header_fol_modal">
+            <label class="label_subscribers">Подписчики</label>
+            <input class="close" type="button" onclick="closeFollowersModal()">
+
+            <hr class="hr_users">
+            <div class="content_users" id="ListOfFollowers" onscroll="scroller()"></div>
+        </div>
+    </div>
+
+    <!--Подписки-->
+    <div class="window_users" id="modalFollows">
+        <div class="header_fol_modal">
+            <label class="label_subscribers">Подписчики</label>
+            <input class="close" type="button" onclick="closeFollowsModal()">
+
+            <hr class="hr_users">
+            <div class="content_users" id="ListOfFollows" onscroll="scroller()"></div>
+        </div>
+    </div>
+
+
+
+    <div class="transparent-substrate" id="transparent-substrate"></div>
+
+    <input type="button" class="home">
+    <input type="button" class="direct" onclick="goToDirect()">
+    <input type="button" class="explore">
+    <input type="button" class="like">
+    <input type="button" class="profile" onclick="goToProfile()">
+</div>
+
+<hr class="main-color">
+
+<div class="main-color container-2">
+    <div class="item">
+        <label for="profileIcon"><img src="https://i.ibb.co/nsGxBpj/user-1.png"></label>
+        <input type="file" class="profileIcon" id="profileIcon">
+    </div>
+    <label class="username font">danilLevchenko</label>
+    <input type="button" value="Редактировать профиль" class="editProfile">
+    <label class="publications">x публикаций</label>
+    <label class="followers element-to-center" onclick="openFollowersModal()">x подписчиков</label>
+    <label class="follows element-to-end" onclick="openFollowsModal()">x подписок</label>
+    <label class="name">danil</label>
+</div>
+
+<hr class="main-color">
+<div class="substrate" id="substrate"></div>
+
+<input hidden="hidden" id="numberPageFollows" value="0">
+<input hidden="hidden" id="numberPageFollowers" value="0">
+<input hidden="hidden" id="memorySearch" value="">
+<input hidden="hidden" value="0" id="modalIsOpen">
+<input hidden="hidden" value="none" id="nameOfModal">
+
+
+<script>
+
+function goToProfile() {
+document.location.replace('http://localhost:8080/' + getMyId() + '/');
+}
+
+function goToDirect() {
+   document.location.replace('http://localhost:8080/direct');
+}
+
+function getMyId() {
+   let pathname = document.location.pathname
+   return pathname.replace(/\//g, '')
+}
+
+function searchInFocus(){
+    if(document.getElementById('search').value !== "") {
+        document.getElementById('searchModal').style.display = 'grid'
+        document.getElementById('transparent-substrate').style.display = 'block'
+    }
+}
+
+
+
+function onKeyUp() {
+    const searchModal = document.getElementById('searchModal')
+    searchModal.style.display = 'none'
+      let searchIsChanged = false
+      let search = document.getElementById('search')
+      let memorySearch
+
+      if(search.value != "") {
+
+      let promise = new Promise((resolve, reject) => {
+
+            memorySearch = search.value
+            setTimeout(() => {
+                resolve("timeIsEnd");
+            }, 1000);
+      });
+
+      promise
+          .then(
+              result => {
+                  console.log('сраниваю... ' + memorySearch + ' и ' + search.value)
+                  if(memorySearch === search.value) {
+                    let list = document.getElementById('ListOfUsers')
+                    let url = 'http://localhost:8080'+document.location.pathname+'users/'+search.value;
+
+
+		                    for(let i = list.children.length-1; i >= 0; i--) {
+		                        list.children[i].remove()
+		                    }
+
+                    searchModal.style.display = 'grid'
+                    document.getElementById('transparent-substrate').style.display = 'block'
+
+
+                    const request = new XMLHttpRequest()
+                    request.open('GET', url)
+                    request.setRequestHeader('Content-Type', 'application/x-www-form-url')
+
+
+                    request.addEventListener("readystatechange", () => {
+                    if (request.readyState === 4 && request.status === 200) {
+                        let data = JSON.parse(request.responseText).map(Object.values)
+                        for(let i = 0; i < data.length; i++) {
+                            let id = data[i][0]
+                            let username = data[i][1]
+                            let name = data[i][2]
+                            let avatar = data[i][3]
+                            list.innerHTML += '<fieldset class="user"><label>' + name + '</label><label>' + username + '</label></fieldset>'
+
+                        }
+                    }
+                });
+                request.send()
+
+                  }
+          },
+          error => {
+              console.log('rejected: ' + error)
+          }
+      );
+  }
+}
+
+
+
+
+	function scroller(){
+	    console.log('срабатывает скролл')
+		if(document.getElementById('nameOfModal')!='none') {
+			let inputWithNumberPage
+			let list
+			let window
+			const request = new XMLHttpRequest()
+			let url
+   			const percentDistanceForDownloadingData = 95
+			if(document.getElementById('nameOfModal').value=='modalFollowers') {
+				inputWithNumberPage = document.getElementById('numberPageFollowers')
+				list = document.getElementById('ListOfFollowers')
+				window = document.getElementById('ListOfFollowers')
+				url = 'http://localhost:8080'+document.location.pathname+'followers/'+document.getElementById('numberPageFollowers').value;
+			}
+			else if(document.getElementById('nameOfModal').value=='modalFollows'){
+				inputWithNumberPage = document.getElementById('numberPageFollows')
+				list = document.getElementById('ListOfFollows')
+				window = document.getElementById('modalFollows')
+				url = 'http://localhost:8080'+document.location.pathname+'follows/'+document.getElementById('numberPageFollows').value;
+			}
+			request.open('GET', url)
+			request.setRequestHeader('Content-Type', 'application/x-www-form-url')
+			console.log(window.scrollTop + ' > ' + (getMaxLengthScroll(window)/100*percentDistanceForDownloadingData))
+    		if(window.scrollTop > (getMaxLengthScroll(window)/100*percentDistanceForDownloadingData)) {
+    		    console.log('запрос отправлен!')
+        		request.send()
+        		window.onscroll = '';
+    		}
+
+
+    		request.addEventListener("readystatechange", () => {
+    		console.log('я тут')
+        		if (request.readyState === 4 && request.status === 200) {
+        		console.log('получаю данные')
+            		inputWithNumberPage.value = (Number.parseInt(inputWithNumberPage.value) + 1)
+            		let data = JSON.parse(request.responseText).map(Object.values)
+            		for(let i = 0; i < data.length; i++) {
+                		let id = data[i][0]
+                		let username = data[i][1]
+                		let name = data[i][2]
+                		let avatar = data[i][3]
+                		list.innerHTML += '<fieldset class="user"><label>' + name + '</label><label>' + username + '</label></fieldset>'
+            		}
+            		window.onscroll = scroller;
+        		}
+        	else {
+            window.onscroll = scroller;
+        	}
+    		})
+		}
+	}
+
+function getMaxLengthScroll(window) {
+    return Math.round(Math.round(window.scrollHeight) - Math.round(window.clientHeight))
+}
+
+function readyUsers() {
+    let inputWithNumberPage
+    let list
+    const request = new XMLHttpRequest()
+    let url
+
+    if(document.getElementById('nameOfModal').value==='modalFollowers') {
+		inputWithNumberPage = document.getElementById('numberPageFollowers')
+		list = document.getElementById('ListOfFollowers')
+		window = document.getElementById('modalFollowers')
+		url = 'http://localhost:8080'+document.location.pathname+'followers/'+document.getElementById('numberPageFollowers').value;
+	}
+	else if(document.getElementById('nameOfModal').value==='modalFollows'){
+		inputWithNumberPage = document.getElementById('numberPageFollows')
+		list = document.getElementById('ListOfFollows')
+		window = document.getElementById('modalFollows')
+		url = 'http://localhost:8080'+document.location.pathname+'follows/'+document.getElementById('numberPageFollowers').value;
+	}
+	request.open('GET', url)
+    request.setRequestHeader('Content-Type', 'application/x-www-form-url')
+
+    request.addEventListener("readystatechange", () => {
+        if (request.readyState === 4 && request.status === 200) {
+            let data = JSON.parse(request.responseText).map(Object.values)
+            for(let i = 0; i < data.length; i++) {
+                let id = data[i][0]
+                let username = data[i][1]
+                let name = data[i][2]
+                let avatar = data[i][3]
+                list.innerHTML += '<fieldset class="user"><label>' + name + '</label><label>' + username + '</label></fieldset>'
+            }
+            inputWithNumberPage.value = (Number.parseInt(inputWithNumberPage.value) + 1)
+        }
+    });
+    request.send()
+  }
+
+document.addEventListener('onbeforeunload', event => {
+    document.getElementById('numberPageFollows').value = ''
+    document.getElementById('numberPageFollowers').value = ''
+    document.getElementById('nameOfModal').value = 'none'
+})
+
+	document.onclick = function(e) {
+		let modalIsOpen = document.getElementById('modalIsOpen').value
+		let transparentSubstrate = document.getElementById('transparent-substrate')
+		if(e.target.id === 'transparent-substrate') {
+		    document.getElementById('searchModal').style.display = 'none'
+		    transparentSubstrate.style.display = 'none'
+		}
+		if(modalIsOpen==1) {
+			if(e.target.id === 'substrate') {
+			    if(document.getElementById('nameOfModal').value == 'modalFollowers') {
+			        closeFollowersModal();
+			    }
+			    else if(document.getElementById('nameOfModal').value == 'modalFollows') {
+			        closeFollowsModal();
+			    }
+			}
+		}
+	}
+
+
+	function openFollowsModal() {
+		const substrate = document.getElementById('substrate')
+		const window = document.getElementById('modalFollows')
+		substrate.style.display = 'block'
+		window.style.display = 'block'
+		document.getElementById('modalIsOpen').value = 1
+		document.getElementById('nameOfModal').value = 'modalFollows'
+		readyUsers()
+	}
+
+	function closeFollowsModal() {
+		const substrate = document.getElementById('substrate')
+		const window = document.getElementById('modalFollows')
+		substrate.style.display = 'none'
+		window.style.display = 'none'
+		listOfFollows = document.getElementById('ListOfFollows').children;
+		for(let i = listOfFollows.length-1; i >= 0; i--) {
+		    listOfFollows[i].remove()
+		}
+		document.getElementById('modalIsOpen').value = 0
+		document.getElementById('numberPageFollows').value = 0;
+		document.getElementById('nameOfModal').value = "none"
+	}
+
+	function openFollowersModal() {
+		const substrate = document.getElementById('substrate')
+		const window = document.getElementById('modalFollowers')
+		substrate.style.display = 'block'
+		window.style.display = 'block'
+		document.getElementById('modalIsOpen').value = 1
+		document.getElementById('nameOfModal').value = 'modalFollowers'
+		readyUsers()
+	}
+
+	function closeFollowersModal() {
+		const substrate = document.getElementById('substrate')
+		const window = document.getElementById('modalFollowers')
+		substrate.style.display = 'none'
+		window.style.display = 'none'
+		listOfFollowers = document.getElementById('ListOfFollowers').children
+
+		for(let i = listOfFollowers.length-1; i >= 0; i--) {
+		    listOfFollowers[i].remove()
+		}
+		document.getElementById('modalIsOpen').value = 0
+		document.getElementById('numberPageFollowers').value = 0;
+		document.getElementById('nameOfModal').value = "none"
+	}
+
+
+
+</script>
+
+</body>
+</html>

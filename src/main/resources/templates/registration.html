@@ -1,0 +1,200 @@
+<style>
+
+body {
+    color:#0d0d0d;
+    font-family: "TIMES";
+    background-color: #eff0f3;
+}
+
+.back {
+ background-color: #eff0f3;
+}
+
+.offset {
+	padding-top: 10%;
+}
+
+.text {
+	font-size: 22px;
+}
+
+.bigText {
+	font-size: 45px;
+	color:#0d0d0d;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	background-color:#fffffe;
+	align-items: center;
+	background-color: #eff0f3;
+}
+
+.item {
+display: flex;
+justify-content: center;
+}
+
+.frame {
+	width: 400px; /* Ширина элемента в пикселах */
+}
+
+.unselected {
+	user-select: none;
+}
+
+.error {
+	font-family: "VERDANA";
+}
+
+input, select:hover {
+	background-color: #ffb782;
+}
+
+option, input[type="date"] {
+font-size: 15px;
+}
+
+input,select {
+	border:none;
+	border-radius: 10px;
+	background-color: #cccccc;
+	width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+
+.darkenButton:hover {
+		background-color:#ff750f;
+}
+
+.button {
+	width: 250px;
+	border-radius: 10px;
+	font-size: 17px;
+	user-select: none; /* убирать выделение текста */
+	background: #ff8e3c;
+ 	border: none;
+  	outline: none; /* убирать контур в Mozilla */
+  	color: #0d0d0d; /* цвет текста */
+}
+
+.hideElement {
+  display: block;
+}
+.showElement {
+  display: none;
+}
+
+.nextStageButton {
+disabled:false;
+}
+
+.disabled {
+
+}
+
+
+
+
+</style>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Зарегистрироваться · Instagram</title>
+    <meta charset="UTF-8"/>
+</head>
+
+<body>
+
+<div class="container">
+
+    <fieldset class="frame">
+
+        <div class="item">
+            <legend class="unselected bigText">Регистрация</legend>
+        </div>
+
+        <form method="POST" th:action="@{/accounts/emailsignup}" id="registerForm">
+            <div class="hideElement">
+                <div>
+                    <input type="text" name="mail" required="required" autocomplete="off" maxlength="255"
+                           placeholder="Электронный адрес" id="mail"/>
+                </div>
+
+                <div>
+                    <input type="text" name="name" required="required" autocomplete="off" maxlength="255"
+                           placeholder="Имя и фамилия" id="name">
+                </div>
+
+                <div>
+                    <input type="text" name="username" required="required" autocomplete="off" maxlength="255"
+                           placeholder="Имя пользователя" id="username"/>
+                </div>
+
+                <div>
+                    <input type="password" name="password" required="required" maxlength="100" placeholder="Пароль"
+                           id="password"/>
+                </div>
+
+                <div class="item">
+                    <input onclick="nextRegistrationStage()"
+                           class="button darkenButton" type="submit"
+                           value="Регистрация" id="buttonNextStageRegistration"/>
+                </div>
+            </div>
+            <div class="showElement">
+                <input type="date" name="birthday" required="required">
+
+                <div class="item">
+                    <input class="button darkenButton" type="submit" value="Далее"/>
+                </div>
+            </div>
+        </form>
+
+    </fieldset>
+
+</div>
+
+<div class="container">
+    <div class="item">
+        <form th:action="@{/accounts/login}" method="get">
+            <input class="button darkenButton" type="submit" value="Вход"/>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    <div class="item" th:if="${error} == 'NicknameIsAlreadyUsed'">
+        <h3 class="unselected error">Этот логин уже используется!</h3>
+    </div>
+</div>
+<script language="JavaScript">
+
+
+function nextRegistrationStage() {
+
+let mail = document.getElementById('mail');
+let password = document.getElementById('password');
+let username = document.getElementById('username');
+
+let hideElement = document.querySelector('.hideElement');
+let showElement = document.querySelector('.showElement');
+
+if (mail.value.length > 0 && password.value.length > 0 && username.value.length > 0) {
+hideElement.style.display = 'none';
+showElement.style.display = 'block';
+}
+
+}
+
+
+
+</script>
+</body>
+</html>
