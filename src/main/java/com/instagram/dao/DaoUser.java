@@ -9,6 +9,8 @@ public interface DaoUser {
     //find
     User findUserWithoutRoleByUsername(String username);
     User findUserWithRoleByUsername(String username);
+    List<Long> getOpponentUserIdsByChatIds(List<Long> chatIds, Long userId);
+
 
     User findUserWithoutRoleById(Long id);
 

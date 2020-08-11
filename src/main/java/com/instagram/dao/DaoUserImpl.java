@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -94,6 +95,23 @@ public class DaoUserImpl implements DaoUser {
         return null;
     }
 
+    private RowMapper<Long> ROW_MAPPER_LIST_LONG = (ResultSet resultSet, int rowNum) -> {
+        return resultSet.getLong("user_id");
+    };
+
+
+    //language=SQL
+    private final String SELECT_OPPONENT_USER_IDS_BY_CHAT_IDS = "select user_id from user_chat_db " +
+            "where chat_id=? and user_id<>?";
+
+    @Override
+    public List<Long> getOpponentUserIdsByChatIds(List<Long> chatIds, Long userId) {
+        List<Long> userIds = new ArrayList<>();
+        chatIds.forEach(chatId -> {
+            userIds.add(jdbcTemplate.query(SELECT_OPPONENT_USER_IDS_BY_CHAT_IDS,ROW_MAPPER_LIST_LONG,chatId,userId).get(0));
+        });
+        return userIds;
+    }
 
     //language=SQL
     private final String INSERT_USER_INTO_USER_DB = "insert into user_db (password, " +

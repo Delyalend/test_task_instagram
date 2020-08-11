@@ -6,6 +6,7 @@ import com.instagram.dao.DaoUser;
 import com.instagram.dto.DtoChat;
 import com.instagram.model.Chat;
 import com.instagram.model.User;
+import com.instagram.service.ServiceChat;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -36,22 +37,20 @@ public class ControllerDirect {
     private SimpMessageSendingOperations messagingTemplate;
 
 
+    @Autowired
+    private ServiceChat serviceChat;
+    
     @MessageMapping("/stompDirect.getChats/{username}")
     @SendTo("/topic/stompDirect/{username}")
     @SneakyThrows
     public List<DtoChat> getChats(Authentication authentication, @DestinationVariable("username") String username) {
-        System.out.println(username);
-
-        //headerAccessor.getSessionAttributes().put("username", authentication.getName());
-        //User user = objectMapper.readValue(json, User.class);
         User iam = daoUser.findUserWithoutRoleByUsername(authentication.getName());
 
-        //List<DtoChat> chats = daoChat.getChatsByUsername(iam.getUsername());//TODO:доделать метод
-        List<DtoChat> chats = new ArrayList<>();
-        chats.add(DtoChat.builder().username("danil").avatar("ijaskf").build());
-        chats.add(DtoChat.builder().username("andrey").avatar("dsdfsd").build());
-        messagingTemplate.convertAndSend("/stompDirect/"+authentication.getName(), chats);
-        return chats;
+        List<DtoChat> dtoChats = serviceChat.getDtoChatsByUsername(username);
+
+        messagingTemplate.convertAndSend("/stompDirect/"+authentication.getName(), dtoChats);
+
+        return dtoChats;
     }
 
 
