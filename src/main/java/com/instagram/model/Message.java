@@ -10,6 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Message {
-    private String from;
+
+    public enum TYPE {text, image, video}
+
+    private String usernameOwner;
     private String text;
+    private String date;
+    private TYPE type;
 }

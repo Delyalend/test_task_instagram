@@ -2,6 +2,11 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     connect()
+
+    let opponent = document.getElementById('opponent')
+    if(opponent != null) {
+        clickUser(opponent)
+    }
   });
 
 let stompClient = null
@@ -68,14 +73,11 @@ function displayChats(payload) {
 }
 
 function onConnected() {
-console.log('фаза ОнКоннектед!')
     stompClient.subscribe('/topic/stompDirect', onMessageReceived);
-    console.log('фаза ОнКоннектед2!')
     stompClient.send("/app/stompDirect.getChats",
         {},
         JSON.stringify({username: 'testUsername'})
     )
-    console.log('фаза онКоннектед закончилась!')
 }
 
 function onError(error) {

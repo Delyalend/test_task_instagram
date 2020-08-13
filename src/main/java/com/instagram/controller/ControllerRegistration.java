@@ -26,7 +26,7 @@ public class ControllerRegistration {
 
         User user = dtoRegistration.toUser(new BCryptPasswordEncoder());
 
-        if (daoUser.findUserWithoutRoleByUsername(user.getUsername()) == null) {
+        if (daoUser.getUserByUsername(user.getUsername()) == null) {
             daoUser.createUser(user);
             return "redirect:/accounts/login";
         }

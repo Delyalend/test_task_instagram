@@ -69,7 +69,7 @@ public class DaoUserImpl implements DaoUser {
     };
 
     @Override
-    public User findUserWithoutRoleByUsername(String username) {
+    public User getUserByUsername(String username) {
         List<User> userList = jdbcTemplate.query(SELECT_USER_WITHOUT_ROLE_BY_USERNAME,ROW_MAPPER_TO_USER_WITHOUT_ROLE,username);
         if(!userList.isEmpty()) {
             return userList.get(0);
@@ -78,7 +78,7 @@ public class DaoUserImpl implements DaoUser {
     }
 
     @Override
-    public User findUserWithRoleByUsername(String username) {
+    public User getUserByUsernameWithRole(String username) {
         List<User> userList = jdbcTemplate.query(SELECT_USER_WITH_ROLE_BY_USERNAME,ROW_MAPPER_TO_USER_WITH_ROLE,username);
         if(!userList.isEmpty()) {
             return userList.get(0);
@@ -87,7 +87,7 @@ public class DaoUserImpl implements DaoUser {
     }
 
     @Override
-    public User findUserWithoutRoleById(Long id) {
+    public User getUserById(Long id) {
         List<User> userList = jdbcTemplate.query(SELECT_USER_WITHOUT_ROLE_BY_ID,ROW_MAPPER_TO_USER_WITHOUT_ROLE,id);
         if(!userList.isEmpty()) {
             return userList.get(0);

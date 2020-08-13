@@ -21,7 +21,7 @@ public class ConfigurationWebSocket implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/stompDirect");
+        registry.addEndpoint("/stompDirect","/stompChat");
     }
 
 }

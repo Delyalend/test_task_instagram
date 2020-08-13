@@ -7,12 +7,12 @@ import java.util.List;
 public interface DaoUser {
 
     //find
-    User findUserWithoutRoleByUsername(String username);
-    User findUserWithRoleByUsername(String username);
+    User getUserByUsername(String username);
+    User getUserByUsernameWithRole(String username);
     List<Long> getOpponentUserIdsByChatIds(List<Long> chatIds, Long userId);
 
 
-    User findUserWithoutRoleById(Long id);
+    User getUserById(Long userId);
 
     //create
     void createUser(User user);

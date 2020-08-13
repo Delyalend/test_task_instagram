@@ -31,7 +31,7 @@ public class ControllerLogin {
     @PostMapping("accounts/login")
     public String postLogin(DtoLogin dtoLogin, Model model) {
 
-        User userFromDb = daoUser.findUserWithoutRoleByUsername(dtoLogin.getUsername());
+        User userFromDb = daoUser.getUserByUsername(dtoLogin.getUsername());
 
         if (userFromDb == null) {
             model.addAttribute("error", "UserNotExistsOrPasswordIncorrect");

@@ -6,43 +6,42 @@
         border: 1px solid #C1C1C1; /* размер и цвет границы блока */
         overflow-y: scroll; /* прокрутка по вертикали */
     }
+
 </style>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}">title</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
 
 
-        <button onclick="goToChat()">Написать сообщение</button>
+<button onclick="goToChat()">Написать сообщение</button>
 
 
-    <div th:if="${isSub == true}">
-        <form method="post" th:action="@{/unsubscribe/{username} (username=${user.username})}" >
-            <input type="submit" value="Отписаться">
-        </form>
-    </div>
-    <div th:if="${isSub == false}">
-        <form method="post" th:action="@{/subscribe/{username} (username=${user.username})}" >
-            <input type="submit" value="Подписаться">
-        </form>
-    </div>
+<div th:if="${isSub == true}">
+    <form method="post" th:action="@{/unsubscribe/{username} (username=${user.username})}">
+        <input type="submit" value="Отписаться">
+    </form>
+</div>
+<div th:if="${isSub == false}">
+    <form method="post" th:action="@{/subscribe/{username} (username=${user.username})}">
+        <input type="submit" value="Подписаться">
+    </form>
+</div>
 
-    <input hidden="hidden" id="numberPage" value="0">
-    <div id="window" class="scroll" onscroll="scroller()">
-        <div data-users=""  id="WindowSubs">
-        </div>
-    </div>
-
-        <script src="js/profile.js"></script>
-
-    <script>
-
-
+<script>
+        function goToChat() {
+            let pathname = document.location.pathname
+            let username = pathname.replace(/\//g, '')
+            document.location.href = 'http:\/\/localhost:8080\/direct\/'+username
+    }
 </script>
+
+
+
 </body>
 </html>

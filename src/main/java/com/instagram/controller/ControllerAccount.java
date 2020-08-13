@@ -1,16 +1,11 @@
 package com.instagram.controller;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.instagram.dao.DaoSub;
 import com.instagram.dao.DaoUser;
 import com.instagram.dto.DtoUserForSubs;
 import com.instagram.model.User;
 import lombok.SneakyThrows;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,10 +40,9 @@ public class ControllerAccount {
 //        S3ObjectInputStream inputStream = s3object.getObjectContent();
 //        FileUtils.copyInputStreamToFile(inputStream, new File("C:\\Users\\Админ\\Desktop\\image.png"));
 
-        User user = daoUser.findUserWithoutRoleByUsername(username);
+        User user = daoUser.getUserByUsername(username);
         model.addAttribute("user", user);
         if (user.getUsername().equals(authentication.getName())) {
-            System.out.println(user.getId());
             return "personalProfile";
         }
 
@@ -91,7 +84,7 @@ public class ControllerAccount {
     @GetMapping("/{username}/follows/{page}")
     public @ResponseBody
     List<DtoUserForSubs> getMoreFollows(@PathVariable int page, Authentication authentication) {
-        User iam = daoUser.findUserWithoutRoleByUsername(authentication.getName());
+        User iam = daoUser.getUserByUsername(authentication.getName());
 
         List<User> usersFromDb = daoSub.findFollowsByFollowerId(iam.getId(), page);
 
@@ -113,7 +106,7 @@ public class ControllerAccount {
     public @ResponseBody
     List<DtoUserForSubs> getMoreFollowers(@PathVariable int page, Authentication authentication) {
 
-        User iam = daoUser.findUserWithoutRoleByUsername(authentication.getName());
+        User iam = daoUser.getUserByUsername(authentication.getName());
 
         List<User> usersFromDb = daoSub.findFollowersByFollowId(iam.getId(), page);
 
@@ -133,7 +126,7 @@ public class ControllerAccount {
     @GetMapping("/{username}/users/{text}")
     public @ResponseBody
     List<DtoUserForSubs> getMoreUsers(@PathVariable String text, Authentication authentication) {
-        User iam = daoUser.findUserWithoutRoleByUsername(authentication.getName());
+        User iam = daoUser.getUserByUsername(authentication.getName());
 
         //List<User> usersFromDb = daoSub.findUsersByNameOrUsername(iam.getId(),text);//нужен специальный сервис!
         List<User> usersFromDb = new ArrayList<>();

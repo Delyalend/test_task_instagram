@@ -37,24 +37,22 @@ public class DaoSubImpl implements DaoSub {
 
     @Override
     public void followToUserByUsername(String usernameSubscription, String usernameSubscriber) {
-        User subscriber = daoUser.findUserWithoutRoleByUsername(usernameSubscriber);
-        User subscription = daoUser.findUserWithoutRoleByUsername(usernameSubscription);
+        User subscriber = daoUser.getUserByUsername(usernameSubscriber);
+        User subscription = daoUser.getUserByUsername(usernameSubscription);
         jdbcTemplate.update(INSERT_INTO_SUBS_DB, subscription.getId(), subscriber.getId());
     }
 
     @Override
     public void unfollowUserByUsername(String usernameSubscription, String usernameSubscriber) {
-        User subscriber = daoUser.findUserWithoutRoleByUsername(usernameSubscriber);
-        User subscription = daoUser.findUserWithoutRoleByUsername(usernameSubscription);
+        User subscriber = daoUser.getUserByUsername(usernameSubscriber);
+        User subscription = daoUser.getUserByUsername(usernameSubscription);
         jdbcTemplate.update(DELETE_FROM_SUBS_DB, subscription.getId(), subscriber.getId());
     }
 
     @Override
     public boolean isFollower(String usernameSubscription, String usernameSubscriber) {
-        User subscriber = daoUser.findUserWithoutRoleByUsername(usernameSubscriber);
-        User subscription = daoUser.findUserWithoutRoleByUsername(usernameSubscription);
-        System.out.println(subscription.getId());
-        System.out.println(subscriber.getId());
+        User subscriber = daoUser.getUserByUsername(usernameSubscriber);
+        User subscription = daoUser.getUserByUsername(usernameSubscription);
         int count = jdbcTemplate.query(SELECT_COUNT_FROM_SUBS_DB, ROW_MAPPER_TO_BOOLEAN, subscriber.getId(), subscription.getId()).get(0);
         return count == 1;
     }
@@ -96,7 +94,7 @@ public class DaoSubImpl implements DaoSub {
         List<Long> subscribersId = jdbcTemplate.query(SELECT_FOLLOWERS_ID_BY_FOLLOW_ID, ROW_MAPPER_FOLLOWER_ID, followId, offset, limit);
         List<User> users = new ArrayList<>();
         subscribersId.forEach((elem)->{
-            users.add(daoUser.findUserWithoutRoleById(elem));
+            users.add(daoUser.getUserById(elem));
         });
         return users;
     }
@@ -108,9 +106,8 @@ public class DaoSubImpl implements DaoSub {
         List<Long> subscribersId = jdbcTemplate.query(SELECT_FOLLOWS_ID_BY_FOLLOWER_ID, ROW_MAPPER_FOLLOW_ID, followerId, offset, limit);
         List<User> users = new ArrayList<>();
         subscribersId.forEach((elem)->{
-            users.add(daoUser.findUserWithoutRoleById(elem));
+            users.add(daoUser.getUserById(elem));
         });
-        System.out.println("users = " + users.size());
         return users;
     }
 }

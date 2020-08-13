@@ -29,9 +29,7 @@ public class ControllerHome {
     @RequestMapping(value = "/getMoreUsers/{page}", method = RequestMethod.GET)
     public @ResponseBody List<DtoUserForSubs> GetMoreUsers(@PathVariable Long page, Authentication authentication) {
 
-        User iam = daoUser.findUserWithoutRoleByUsername(authentication.getName());
-
-        System.out.println(page);
+        User iam = daoUser.getUserByUsername(authentication.getName());
 
         List<DtoUserForSubs> users = new ArrayList();
         for (int i = 0; i < 10; i++) {
