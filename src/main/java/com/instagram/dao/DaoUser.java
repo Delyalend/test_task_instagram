@@ -9,7 +9,7 @@ public interface DaoUser {
     //find
     User getUserByUsername(String username);
     User getUserByUsernameWithRole(String username);
-    List<Long> getOpponentUserIdsByChatIds(List<Long> chatIds, Long userId);
+    List<Long> getOpponentIds(List<Long> chatIds, Long userId);
 
 
     User getUserById(Long userId);

@@ -37,52 +37,47 @@ public class ServiceChatImpl implements ServiceChat {
     private ObjectMapper mapper;
 
     public List<User> getOpponentsForUserByUsername(String username) {
-        //Находим юзера, которому нужны чаты
-        User user = daoUser.getUserByUsername(username);
+        User usr = daoUser.getUserByUsername(username);
 
-        //Находим список id чатов, в которых состоит юзер
-        List<Long> chatIdsByUserId = daoChat.getChatIdsByUserId(user.getId());
+        List<Long> chatIds = daoChat.getChatIdsByUserId(usr.getId());
 
-        //Берем из чатов id юзеров-оппонентов
-        List<Long> opponentUserIds = daoUser.getOpponentUserIdsByChatIds(chatIdsByUserId, user.getId());
+        List<Long> opponentIds = daoUser.getOpponentIds(chatIds, usr.getId());
 
-        //Получаем при помощи id юзеров модель User
-        List<User> usersFromChats = new ArrayList<>();
-        opponentUserIds.forEach(opponent -> {
-            usersFromChats.add(daoUser.getUserById(opponent));
+        List<User> users = new ArrayList<>();
+        opponentIds.forEach(opponent -> {
+            users.add(daoUser.getUserById(opponent));
         });
-        return usersFromChats;
+        return users;
     }
 
     @Override
     public List<DtoChat> getDtoChatsByUsername(String username) {
-        List<User> usersFromChats = getOpponentsForUserByUsername(username);
-        //Преобразуем юзеров в dto chat
+        List<User> users = getOpponentsForUserByUsername(username);
         List<DtoChat> dtoChats = new ArrayList<>();
-        usersFromChats.forEach(userFromChat -> {
-            dtoChats.add(DtoChat.builder().username(userFromChat.getUsername()).avatar(userFromChat.getAvatar()).build());
+        users.forEach(userFromChat -> {
+            dtoChats.add(DtoChat.builder()
+                    .username(userFromChat.getUsername())
+                    .avatar(userFromChat.getAvatar())
+                    .build());
         });
         return dtoChats;
     }
 
 
     @Override
-    public Chat getChatByUserIds(Long user1, Long user2) {
-        List<Long> chatIdsOfIam = daoChat.getChatIdsByUserId(user1);
-        List<Long> chatIdsOfOpponent = daoChat.getChatIdsByUserId(user2);
-        //Находим общие id чатов в итоге получаем чаты, которые есть у двух юзеров
-        for (int i = 0; i < chatIdsOfIam.size(); i++) {
-            for (int j = 0; j < chatIdsOfOpponent.size(); j++) {
-                if (chatIdsOfIam.get(i).equals(chatIdsOfOpponent.get(j))) {
-                    return daoChat.getChatByChatId(chatIdsOfIam.get(i));
+    public Chat getChatByUserIds(Long usr1, Long usr2) {
+        List<Long> iamChatIds = daoChat.getChatIdsByUserId(usr1);
+        List<Long> opponentChatIds = daoChat.getChatIdsByUserId(usr2);
+        for (int i = 0; i < iamChatIds.size(); i++) {
+            for (int j = 0; j < opponentChatIds.size(); j++) {
+                if (iamChatIds.get(i).equals(opponentChatIds.get(j))) {
+                    return daoChat.getChatByChatId(iamChatIds.get(i));
                 }
             }
         }
-
         return null;
     }
 
-    //TODO:доделать метод
     @Override
     @SendTo("/topic/stompChat/{username}")
     @SneakyThrows
@@ -90,17 +85,16 @@ public class ServiceChatImpl implements ServiceChat {
         Message msg = mapper.readValue(msgJSON, Message.class);
 
         User iam = daoUser.getUserByUsername(msg.getUsernameOwner());
-        User frnd = daoUser.getUserByUsername(username);
+        User opponent = daoUser.getUserByUsername(username);
 
-        if (!hasUsersChat(iam.getId(), frnd.getId())) {
-            Long chatId = daoChat.createChat(iam.getId(), frnd.getId());
+        if (!hasUsersChat(iam.getId(), opponent.getId())) {
+            Long chatId = daoChat.createChat(iam.getId(), opponent.getId());
             Long msgId = daoMsg.createMessage(msg.getText(), msg.getType(), chatId);
             daoMsg.addMessageToChat(chatId, msgId);
-        }
-        else {
-            Chat chat = getChatByUserIds(iam.getId(), frnd.getId());
+        } else {
+            Chat chat = getChatByUserIds(iam.getId(), opponent.getId());
             if (isChatDeleted(iam.getId(), chat.getId())) {
-                daoChat.setDeletedToFalse(chat.getId(),iam.getId());
+                daoChat.setDeletedToFalse(chat.getId(), iam.getId());
             }
             Long msgId = daoMsg.createMessage(msg.getText(), msg.getType(), chat.getId());
             daoMsg.addMessageToChat(chat.getId(), msgId);
@@ -111,12 +105,12 @@ public class ServiceChatImpl implements ServiceChat {
 
     @Override
     public boolean hasUsersChat(Long iamId, Long opponentId) {
-        List<Long> chatIdsOfIam = daoChat.getChatIdsByUserId(iamId);
-        List<Long> chatIdsOfOpponent = daoChat.getChatIdsByUserId(opponentId);
-        //Находим общие id чатов в итоге получаем чаты, которые есть у двух юзеров
-        for (Long aLong : chatIdsOfIam) {
-            for (Long value : chatIdsOfOpponent) {
-                if (aLong.equals(value)) {
+        List<Long> iamChatIds = daoChat.getChatIdsByUserId(iamId);
+        List<Long> opponentChatIds = daoChat.getChatIdsByUserId(opponentId);
+
+        for (Long iamChatId : iamChatIds) {
+            for (Long opponentChatId : opponentChatIds) {
+                if (iamChatId.equals(opponentChatId)) {
                     return true;
                 }
             }
@@ -127,7 +121,6 @@ public class ServiceChatImpl implements ServiceChat {
     @Override
     public boolean isChatDeleted(Long iamId, Long chatId) {
         return daoChat.isChatDeleted(iamId, chatId);
-
     }
 
 

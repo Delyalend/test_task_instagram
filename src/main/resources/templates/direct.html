@@ -384,9 +384,8 @@ width: 35px;
             <div class="header_direct_panel">Direct</div>
         </div>
         <div id="chatList">
-            <div th:if="${opponent}" onloadstart="clickUser(this)" class="container_user" onmouseenter="enterUser(this)"
-                 onmouseleave="leaveUser(this)" onclick="clickUser(this)"
-                 value="" style="background: rgb(255, 255, 255);" id="opponent">
+            <div th:if="${opponent}" class="container_user" onmouseenter="setBackground(this, '#F7F7F7')" onmouseleave="setBackground(this, '#ffffff')"
+            onclick="clickUser(this)" id="opponent">
                 <img class="round" src="https://i.ibb.co/NWGSMjQ/user.png/">
                 <label class="nickname" th:text="${opponent.username}">username</label>
             </div>
@@ -439,7 +438,8 @@ width: 35px;
 </div>
 
 <script th:src="@{/webjars/stomp-websocket/2.3.3-1/stomp.js}" type="text/javascript"></script>
-<!--<script src="js/direct.js"></script>-->
-<script th:src="@{/js/direct.js}" type="text/javascript"></script>
+<script th:src="@{/js/WebSocketConnection.js}" src="/js/WebSocketConnection.js" type="text/javascript"></script>
+<script th:src="@{/js/WebSocketMessage.js}" src="/js/WebSocketMessage.js" type="text/javascript"></script>
+<script th:src="@{/js/MainDirect.js}" src="/js/MainDirect.js" type="text/javascript"></script>
 </body>
 </html>

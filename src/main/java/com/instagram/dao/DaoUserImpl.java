@@ -105,7 +105,7 @@ public class DaoUserImpl implements DaoUser {
             "where chat_id=? and user_id<>?";
 
     @Override
-    public List<Long> getOpponentUserIdsByChatIds(List<Long> chatIds, Long userId) {
+    public List<Long> getOpponentIds(List<Long> chatIds, Long userId) {
         List<Long> userIds = new ArrayList<>();
         chatIds.forEach(chatId -> {
             userIds.add(jdbcTemplate.query(SELECT_OPPONENT_USER_IDS_BY_CHAT_IDS,ROW_MAPPER_LIST_LONG,chatId,userId).get(0));
