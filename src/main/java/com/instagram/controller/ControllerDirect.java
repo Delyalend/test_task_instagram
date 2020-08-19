@@ -1,5 +1,6 @@
 package com.instagram.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.instagram.dao.DaoUser;
 import com.instagram.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,13 @@ public class ControllerDirect {
     @Autowired
     private DaoUser daoUser;
 
+    @GetMapping("/direct/t/{chatId}")
+    public String getChatId() {
+        return "redirect:/direct/inbox";
+    }
 
-
-
-    @GetMapping("/direct")
-    public String directGetter(Authentication auth, Model model) {
+    @GetMapping("/direct/inbox")
+    public String getDirect(Authentication auth, Model model) {
         User iam = daoUser.getUserByUsername(auth.getName());
         model.addAttribute("iam", iam);
         return "direct";
@@ -33,6 +36,5 @@ public class ControllerDirect {
         model.addAttribute("opponent", opponent);
         return "direct";
     }
-
 
 }

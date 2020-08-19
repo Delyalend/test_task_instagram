@@ -1,5 +1,6 @@
 package com.instagram.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Message {
 
-    public enum TYPE {text, image, video}
-
-    private String usernameOwner;
-    private String text;
+    private Long id;
+    private Long chat_id;
+    private Long owner_id;
+    private String content;
+    private String type;
     private String date;
-    private TYPE type;
 }

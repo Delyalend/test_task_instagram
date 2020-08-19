@@ -380,7 +380,7 @@ document.location.replace('http://localhost:8080/' + getMyId() + '/');
 }
 
 function goToDirect() {
-   document.location.replace('http://localhost:8080/direct');
+   document.location.replace('http://localhost:8080/direct/inbox');
 }
 
 function getMyId() {
@@ -495,9 +495,7 @@ function onKeyUp() {
 
 
     		request.addEventListener("readystatechange", () => {
-    		console.log('я тут')
         		if (request.readyState === 4 && request.status === 200) {
-        		console.log('получаю данные')
             		inputWithNumberPage.value = (Number.parseInt(inputWithNumberPage.value) + 1)
             		let data = JSON.parse(request.responseText).map(Object.values)
             		for(let i = 0; i < data.length; i++) {

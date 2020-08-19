@@ -27,21 +27,41 @@ class TextArea {
 
 }
 
+function clearMessageList() {
+    let msgList = document.getElementById('messageList')
+    msgList.innerHTML = ''
+}
+
+function clearOffset() {
+     document.getElementById('dataOffset').setAttribute('data-offset', 0)//запусти
+}
+
 function clickUser(user) {
+clearOffset()
+
+
+
+    let chatId = user.dataset.chatId
+    window.history.pushState(null,null,'http://localhost:8080/direct/t/'+chatId)
+
+    getHistory()
 
     if(User.selectedUser != null) {
+        clearMessageList()
+
+        subscription.unsubscribe()
         User.setBackground(Color.white)
         User.setValue('')
     }
 
     User.setSelectedUser(user)
-    //user.value = 'selected'
-    //User.setValue('selected')
     User.setBackground(Color.darkWhite)
 
 
     MessagePanel.setDisplay('message-panel-view-1', 'none')
     MessagePanel.setDisplay('message-panel-view-2', 'block')
+
+    subscribeOnChat()
 }
 
 class Chat {
@@ -61,11 +81,13 @@ class Chat {
 
 function addMarkupUser(data, divForMarkup) {
     for (let i = 0; i < data.length; i++) {
-        divForMarkup.innerHTML += '<div class=\"container_user\" onmouseenter=\"setBackground(this, \'#F7F7F7\')\" onmouseleave=\"setBackground(this, \'#ffffff\')\"' +
-            'onclick=\"clickUser(this)\"' +
-            '\<img class=\"round" src=\"https\:\/\/i.ibb.co\/NWGSMjQ\/user.png\/\"\>' +
-            '\<label class=\"nickname\"\>' + data[i].username + '\<\/label\>' +
-            '\<\/div\>'
+            let chatId = data[i].chatId
+
+            divForMarkup.innerHTML += '<div data-chat-id=\"'+ data[i].chatId +'\" class=\"container_user\" onmouseenter=\"setBackground(this, \'#F7F7F7\')\" '+
+            'onmouseleave=\"setBackground(this, \'#ffffff\')\" onclick=\"clickUser(this)\">'+
+            '<img class=\"round\" src=\"https://i.ibb.co/NWGSMjQ/user.png/\">'+
+            '<label class=\"nickname\">'+ data[i].username + '</label>'+
+            '</div>';
     }
 }
 
@@ -102,10 +124,6 @@ function setBackground(user, background) {
         if(User.selectedUser != user) {
             user.style.background = background
         }
-
-    //    if (user.value !== 'selected') {
-    //        user.style.background = background
-    //    }
 }
 
 
@@ -218,10 +236,11 @@ TextArea.getElement().addEventListener('keyup', function(){
 
 });
 
+let client = null
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    let client = Stomp.client('ws://localhost:8080/stompDirect')
+    client = Stomp.client('ws://localhost:8080/stompDirect')
     let promise = new Promise((resolve, reject) => {
         client.connect({}, function () {
         client.subscribe('/topic/stompDirect/'+iam.value, Chat.displayAll)
@@ -230,14 +249,9 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     promise.then(
         result => {
-            client.send('/app/stompDirect.getChats/'+iam.value)
-                //Chat.tryDisplay('opponent')
-                let opponent = document.getElementById('opponent')
-                if(opponent != null) {
-                    console.log('-x-x-x-x-x-x-x-x-x-x-x-x-x-x WORK!')
-                    clickUser(opponent)
-                    User.selectedUser = opponent
-                }
+            //client.send('/app/stompDirect.getChats/'+iam.value)
+            client.send('/app/stompDirect.getChats')
+            Chat.tryDisplay('opponent')
         },
         error => {
             console.log("rejected: " + reject)

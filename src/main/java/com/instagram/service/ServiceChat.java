@@ -9,14 +9,16 @@ import java.util.List;
 public interface ServiceChat {
 
 
-    List<DtoChat> getDtoChatsByUsername(String username);
+//    List<DtoChat> getDtoChatsByUsername(String username);
 
-    boolean hasUsersChat(Long iamId, Long opponentId);
+//    boolean hasUsersChat(Long iamId, Long opponentId);
 
-    boolean isChatDeleted(Long iamId, Long chatId);
+//    boolean isChatDeleted(Long iamId, Long chatId);
 
-    Chat getChatByUserIds(Long user1, Long user2);
+//    Chat getChatByUserIds(Long user1, Long user2);
 
-    Message sendMessage(String msgJSON, String username);
+//    Message sendMessage(String msgJSON, String username);
 
+
+    List<DtoChat> sendChatsToUser(String username);
 }

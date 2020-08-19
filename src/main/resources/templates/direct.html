@@ -406,17 +406,8 @@ width: 35px;
         </div>
         <hr>
         <div class="messagePanel">
-            <div class="messageList">
-                <div class="message">user1</div>
-                <div class="message">user2</div>
-                <div class="message">user3</div>
-                <div class="message">user4</div>
-                <div class="message">user5</div>
-                <div class="message">user1</div>
-                <div class="message">user2</div>
-                <div class="message">user3</div>
-                <div class="message">user4</div>
-                <div class="message">user5</div>
+            <div class="messageList" id="messageList">
+
             </div>
         </div>
         <div class="messageInputDiv">
@@ -424,7 +415,7 @@ width: 35px;
 
                 <textarea placeholder="Напишите сообщение..." class="messageInput" id="ta"></textarea></div>
             <div class="textAreaButtonDiv" id="textAreaButtonDiv">
-                <button class="textAreaButton" onclick="sendMessage()" id="textAreaButton">Отправить</button>
+                <button class="textAreaButton" onclick="buttonSendTextClick()" id="textAreaButton">Отправить</button>
                 <div class="imageDiv" id="imageDiv">
                     <input type="file" accept="image/jpeg,image/png,image/gif" class="inputFile">
                 </div>
@@ -434,6 +425,7 @@ width: 35px;
     </div>
 </div>
 <input hidden="hidden" th:value="${iam.username}" id="iam">
+<div data-offset="0" id="dataOffset"></div>
 <button onclick="sendAndGetListChats()">ClickMe!</button>
 </div>
 
@@ -441,5 +433,7 @@ width: 35px;
 <script th:src="@{/js/WebSocketConnection.js}" src="/js/WebSocketConnection.js" type="text/javascript"></script>
 <script th:src="@{/js/WebSocketMessage.js}" src="/js/WebSocketMessage.js" type="text/javascript"></script>
 <script th:src="@{/js/MainDirect.js}" src="/js/MainDirect.js" type="text/javascript"></script>
+<script th:src="@{/js/MessageHistoryDirect.js}" src="/js/MessageHistoryDirect.js" type="text/javascript"></script>
+
 </body>
 </html>

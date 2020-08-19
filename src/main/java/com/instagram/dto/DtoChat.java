@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DtoChat {
-
+    private Long chatId;
     private String username;
     private String avatar;
-
 }
