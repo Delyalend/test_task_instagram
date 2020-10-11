@@ -1,4 +1,4 @@
-package com.instagram.dto;
+package com.instagram.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DtoMessage {
-    private Long id;
-    private Long ownerId;
-    private String content;
+public class Image {
     private String type;
-    private String date;
+    private String src;
+    private Long ownerId;
+    private Long postId;
 }

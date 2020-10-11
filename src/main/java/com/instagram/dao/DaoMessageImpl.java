@@ -21,20 +21,20 @@ public class DaoMessageImpl implements DaoMessage {
 
 
     @Override
-    public void createMessage(Long chatId, Long owner_id, String content, String typeContent) {
-        jdbcTemplate.update(INSERT_INTO_MESSAGE_DB, chatId, owner_id, content, typeContent);
+    public void createMessage(Long chatId, Long ownerId, String content, String typeContent) {
+        jdbcTemplate.update(INSERT_INTO_MESSAGE_DB, chatId, ownerId, content, typeContent);
     }
 
 
     //language=SQL
     private final String SELECT_FROM_MESSAGE_CHAT_DB_BY_CHAT_ID = "select * from message_db where message_db.chat_id = ? " +
-            "order by message_db.date offset ? limit ?";
+            "order by message_db.date desc offset ? limit ?";
     
     private RowMapper<Message> ROW_MAPPER_TO_MESSAGE_LIST = (ResultSet resultSet, int rowNum) -> {
         return Message.builder()
                 .id(resultSet.getLong("id"))
-                .chat_id(resultSet.getLong("owner_id"))
-                .chat_id(resultSet.getLong("chat_id"))
+                .chatId(resultSet.getLong("chat_id"))
+                .ownerId(resultSet.getLong("owner_id"))
                 .content(resultSet.getString("content"))
                 .type(resultSet.getString("type"))
                 .date(resultSet.getString("date"))

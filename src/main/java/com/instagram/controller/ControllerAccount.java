@@ -1,6 +1,5 @@
 package com.instagram.controller;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.instagram.dao.DaoSub;
 import com.instagram.dao.DaoUser;
 import com.instagram.dto.DtoUserForSubs;
@@ -26,26 +25,20 @@ public class ControllerAccount {
     @Autowired
     private DaoSub daoSub;
 
-    @Autowired
-    private AmazonS3 amazonS3;
-
     @GetMapping("/{username}/")
-    @SneakyThrows
-    public String getAccountProfile(@PathVariable String username, Model model, Authentication authentication) {
-//        ObjectListing objectListing = amazonS3.listObjects("testtaskinstagrambucket");
-//        for (S3ObjectSummary os : objectListing.getObjectSummaries()) {
-//            System.out.println(os.getKey());
-//        }
-//        S3Object s3object = amazonS3.getObject("testtaskinstagrambucket", "настройки.PNG");
-//        S3ObjectInputStream inputStream = s3object.getObjectContent();
-//        FileUtils.copyInputStreamToFile(inputStream, new File("C:\\Users\\Админ\\Desktop\\image.png"));
+    public String getAccountProfile(@PathVariable String username, Model model, Authentication authentication) throws Exception {
 
         User user = daoUser.getUserByUsername(username);
+
+        if(user == null) {
+            throw new Exception("user is not found");
+        }
+
         model.addAttribute("user", user);
+
         if (user.getUsername().equals(authentication.getName())) {
             return "personalProfile";
         }
-
 
         String title;
         if (user.getName().equals("")) {
@@ -61,25 +54,6 @@ public class ControllerAccount {
 
         return "profile";
     }
-//    @RequestMapping(value = "/{username}/followers/{page}", method = RequestMethod.GET)
-//    public @ResponseBody List<DtoUserForSubs> GetMoreUsers(@PathVariable int page, Authentication authentication) {
-//
-//        User iam = daoUser.findUserWithoutRoleByUsername(authentication.getName());
-//
-//        System.out.println(page);
-//
-//        List<DtoUserForSubs> users = new ArrayList();
-//        for (int i = 0; i < 10; i++) {
-//            DtoUserForSubs user = new DtoUserForSubs();
-//            user.setId(1L + i);
-//            user.setName("Name" + i);
-//            user.setUsername("Username" + i);
-//            user.setAvatar("Avatar" + i);
-//            users.add(user);
-//        }
-//
-//        return users;
-//    }
 
     @GetMapping("/{username}/follows/{page}")
     public @ResponseBody

@@ -1,5 +1,6 @@
 package com.instagram.dto;
 
+import com.instagram.model.Image;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DtoMessage {
-    private Long id;
-    private Long ownerId;
-    private String content;
-    private String type;
-    private String date;
+public class DtoPostPreview {
+    private Image image;
+    private Long countLikes;
+    private Long countComments;
 }

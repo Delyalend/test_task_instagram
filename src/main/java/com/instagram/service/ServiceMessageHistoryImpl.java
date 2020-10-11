@@ -19,8 +19,8 @@ public class ServiceMessageHistoryImpl implements ServiceMessageHistory {
     }
 
     @Override
-    public void saveMessage(Long chatId, Long ownerId, String content, String type) {
-        daoMessage.createMessage(chatId,ownerId,content,type);
+    public void saveMessage(Message msg) {
+        daoMessage.createMessage(msg.getChatId(),msg.getOwnerId(),msg.getContent(),msg.getType());
     }
 
 

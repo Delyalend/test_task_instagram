@@ -8,6 +8,6 @@ public interface ServiceMessageHistory {
 
     List<Message> getMessageHistory(long chatId, int offset);
 
-    void saveMessage(Long chatId, Long ownerId, String content, String type);
+    void saveMessage(Message msg);
 
 }

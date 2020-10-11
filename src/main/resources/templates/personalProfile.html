@@ -90,10 +90,6 @@
 
 /* FOLLOW/FOLLOWER MODAL - END */
 
-
-
-
-
 	.modalSearch {
 	display: none;
 	margin-top: 20px;
@@ -222,7 +218,6 @@
 	border-radius: 90px;
 	width: 128px;
 	height: 128px;
-
 }
 
 .item {
@@ -289,7 +284,233 @@ hr {
     height:25px;
 }
 
+.postPanel{
+	display: grid;
+	grid-template-columns: 28% 100px 100px 100px 100px 100px 100px 100px;
+	grid-template-rows: 10px 10px 10px;
+	grid-template-areas:
+	". . . . . . . ."
+	". publications . post . saved . mark"
+	". . . . . . . .";
+}
 
+.publications {
+grid-area:publications;
+}
+
+.post {
+grid-area:post;
+}
+
+.saved {
+grid-area:saved;
+}
+
+.mark {
+grid-area:mark;
+}
+
+.buttonForPhoto {
+	display: none;
+}
+
+.comment {
+	overflow: auto;
+	resize: none;
+	width: 300px;
+	height: 50px;
+	background: #f6f6f6;
+	border: 1px solid #cecece;
+	border-radius: 8px 0 0 0;
+	padding: 8px 0 8px 10px;
+}
+
+.publicationsMenu {
+    width: 100%;
+    height: 100%;
+	overflow-y: scroll;
+	overflow-x: none;
+}
+
+.postInfo {
+    width: 1100px;
+    height: 600px;
+    background-color: white;
+    position: absolute;
+    z-index: 99999;
+    margin-left: 20%;
+    margin-top: 5%;
+}
+
+.postInfoMain {
+    background-color: #ffffff;
+	display: none;
+	align-items: center;
+	grid-template-columns: 700px 0.5px 30px 50px 180px 20px 50px 40px 29.5px;
+	grid-template-rows: 30px 30px 60px 160px 70px 60px 0px 80px 10px 80px 20px;
+	grid-template-areas:
+	"postImage line2 . . . . . . buttonClosePostPanel"
+	"postImage line2 . iconForPostOwner usernameForPostPanel . . . ."
+	"postImage line2 line1 line1 line1 line1 line1 line1 line1"
+	"postImage line2 comments comments comments comments comments comments comments"
+	"postImage line2 comments comments comments comments comments comments comments"
+	"postImage line2 line3 line3 line3 line3 line3 line3 line3"
+	"postImage line2 . iconForLikePost . . . iconForSavePost ."
+	"postImage line2 . dateForPost . . . . ."
+	"postImage line2 line4 line4 line4 line4 line4 line4 line4"
+	"postImage line2 . textAreaForComment textAreaForComment . buttonPublishComment . ."
+	"postImage line2 . . . . . . .";
+}
+
+.buttonPublishComment {
+	border: 0px;
+    grid-area: buttonPublishComment;
+    background-color: #ffffff;
+    color: blue;
+}
+
+.textAreaForComment {
+    grid-area: textAreaForComment;
+    resize: none;
+    font-size: 13px;
+	padding: 6px 0 4px 10px;
+	border: 0px;
+}
+
+.dateForPost {
+    grid-area: dateForPost;
+}
+
+.iconForLikePost {
+    grid-area: iconForLikePost;
+}
+
+.iconForSavePost {
+    grid-area: iconForSavePost;
+}
+
+.line1 {
+    grid-area: line1;
+    border-bottom: 0.05px solid #efefef;
+    border-right: 0.05px solid #efefef;
+}
+
+.line2 {
+   grid-area: line2;
+   border-top: 600px solid #efefef;
+   border-right: 0.05px solid #efefef;
+}
+
+.line3 {
+    grid-area: line3;
+    border-bottom: 0.05px solid #efefef;
+    border-right: 0.05px solid #efefef;
+}
+
+.line4 {
+    grid-area: line4;
+    border-bottom: 0.05px solid #efefef;
+    border-right: 0.05px solid #efefef;
+}
+
+.usernameForPostPanel {
+    grid-area: usernameForPostPanel;
+    font-size: 25px;
+}
+
+.buttonClosePostPanel {
+    grid-area: buttonClosePostPanel;
+    font-size: 25px;
+}
+
+.postImage {
+	grid-area: postImage;
+}
+
+.leftArrowForImage {
+    opacity: 0.3;
+    padding-bottom:60px;
+    font-size: 50px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    style: block;
+    margin-left: 0px;
+    z-index: 999999999;
+}
+
+.rightArrowForImage {
+    opacity: 0.3;
+    padding-bottom:60px;
+    font-size: 50px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    style: block;
+    margin-left: 650px;
+    z-index: 999999999;
+}
+
+.divImages {
+    position: absolute;
+}
+
+.iconForPostOwner {
+    display: none;
+	border-radius: 90px;
+	width: 32px;
+	height: 32px;
+}
+
+.iconForPostOwnerDiv {
+    grid-area: iconForPostOwner;
+}
+
+.comments {
+    grid-area: comments;
+    height: 290px;
+    overflow-y: scroll;
+}
+
+.commentsMain {
+    display: grid;
+    grid-template-columns: 20px 20px 40px 300px 20px;
+    grid-template-rows: 0.2fr 10px 10px 3fr;
+	grid-template-areas:
+	". . . . ."
+	". iconForCommentDiv . usernameForOwnerComment ."
+	". iconForCommentDiv . . ."
+	". . . textComment .";
+}
+
+.dateComment {
+    grid-area: dateComment;
+}
+
+.iconForCommentDiv {
+    grid-area: iconForCommentDiv;
+}
+
+.usernameForOwnerComment {
+    grid-area: usernameForOwnerComment;
+    font-size: 20px;
+}
+
+.textComment {
+    grid-area: textComment;
+}
+
+.pTextComment {
+    overflow-wrap: break-word;
+}
+
+.iconForComment {
+    display: none;
+    grid-area: iconForCommentDiv;
+	border-radius: 90px;
+	width: 32px;
+	height: 32px;
+}
 
 
 </style>
@@ -298,11 +519,35 @@ hr {
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta charset="UTF-8">
-    <title th:text="${user.username}">username</title>
+    <title th:text="${user.username}" id="username">username</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
+
+<div class="postInfoMain postInfo" id="postInfo">
+    <button class="rightArrowForImage" onclick="goToRightImage()" id="rightTransferArrowForImages">></button>
+    <button class="leftArrowForImage" onclick="goToLeftImage()" id="leftTransferArrowForImages"><</button>
+    <div class="buttonClosePostPanel" id="buttonClosePostPanel">X</div>
+    <div class="usernameForPostPanel">username</div>
+    <div class="line1"></div>
+    <div class="line2"></div>
+    <div class="line3"></div>
+    <div class="line4"></div>
+    <img class="iconForLikePost" src="https://i.ibb.co/Btgv7w1/like-favorite-heart-5759.png">
+    <img class="iconForSavePost" src="https://i.ibb.co/txZkRTR/2849790-book-bookmark-interface-media-multimedia-tab-107960.png">
+    <div class="dateForPost">08.10.2020</div>
+    <textarea class="textAreaForComment" placeholder="Добавить комментарий..." rows="4" cols="20"></textarea>
+    <button class="buttonPublishComment">Опубликовать</button>
+    <div class="comments" id="postComments"></div>
+    <div class="iconForPostOwnerDiv">
+        <label for="iconForPostOwner"><img src="https://i.ibb.co/nsGxBpj/user-1.png" width="48" height="48"></label>
+        <input type="file" class="iconForPostOwner" id="iconForPostOwner">
+    </div>
+    <div id="images" class="divImages"></div>
+</div>
 
 <div class="container-1 top-color">
     <img class="icon" src="https://i.ibb.co/84TX9S2/735145cfe0a4.png">
@@ -365,274 +610,88 @@ hr {
 
 <hr class="main-color">
 <div class="substrate" id="substrate"></div>
+<div class="substrate" id="substrateForPostInfo"></div>
 
+
+<div class="postPanel">
+    <div class="publications">
+        <button onclick="showPublications()">Публикации</button>
+    </div>
+    <div class="post">
+        <button onclick="showCreationPostMenu()">Сделать пост</button>
+    </div>
+    <div class="saved">
+        <button onclick="showSaved()">Сохраненное</button>
+    </div>
+    <div class="mark">
+        <button onclick="showMarks()">Отметки</button>
+    </div>
+</div>
+
+<!--Меню публикаций-->
+<div id="publicationsMenu">
+    <div id="posts" class="publicationsMenu">
+
+    </div>
+</div>
+
+<!--Меню создания поста-->
+<div id="creationPostMenu">
+    <div>
+        <div>
+            <button  onclick="showPhotoPanel()">Фото</button>
+            <button  onclick="showVideoPanel()">Видео</button>
+            <div id="photoPanel">
+
+                <input type="file" name="photo" accept="image/jpeg,image/png" id="imgInp" >
+
+                <form id="photos">
+                    <img id="blah" src="#" alt="your image" height="500px" width="500px">
+                </form>
+
+                <div>Добавьте комментарий</div>
+                <textarea id="comment" maxlength="300" class="comment"></textarea>
+                <button onclick="sendPostToServer()">Запостить</button>
+
+                <div>
+                    <button class="buttonForPhoto" id="buttonBack" onclick="buttonBack()">назад</button>
+                    <button class="buttonForPhoto" id="buttonDelete" onclick="buttonDelete()">удалить</button>
+                    <button class="buttonForPhoto" id="buttonForward" onclick="buttonForward()">вперед</button>
+                </div>
+            </div>
+            <div id="videoPanel">
+
+            </div>
+        </div>
+
+    </div>
+    <button onclick="getPostsFromServer()">КЛИКНИ МНЯ!</button>
+</div>
+
+<!--Меню сохраненных постов-->
+<div id="savedMenu">
+
+</div>
+
+<!--Меню отметок-->
+<div id="marksMenu">
+
+</div>
+
+<input hidden="hidden" id="postOffset" value="0">
 <input hidden="hidden" id="numberPageFollows" value="0">
 <input hidden="hidden" id="numberPageFollowers" value="0">
 <input hidden="hidden" id="memorySearch" value="">
 <input hidden="hidden" value="0" id="modalIsOpen">
 <input hidden="hidden" value="none" id="nameOfModal">
 
-
-<script>
-
-function goToProfile() {
-document.location.replace('http://localhost:8080/' + getMyId() + '/');
-}
-
-function goToDirect() {
-   document.location.replace('http://localhost:8080/direct/inbox');
-}
-
-function getMyId() {
-   let pathname = document.location.pathname
-   return pathname.replace(/\//g, '')
-}
-
-function searchInFocus(){
-    if(document.getElementById('search').value !== "") {
-        document.getElementById('searchModal').style.display = 'grid'
-        document.getElementById('transparent-substrate').style.display = 'block'
-    }
-}
-
-
-
-function onKeyUp() {
-    const searchModal = document.getElementById('searchModal')
-    searchModal.style.display = 'none'
-      let searchIsChanged = false
-      let search = document.getElementById('search')
-      let memorySearch
-
-      if(search.value != "") {
-
-      let promise = new Promise((resolve, reject) => {
-
-            memorySearch = search.value
-            setTimeout(() => {
-                resolve("timeIsEnd");
-            }, 1000);
-      });
-
-      promise
-          .then(
-              result => {
-                  console.log('сраниваю... ' + memorySearch + ' и ' + search.value)
-                  if(memorySearch === search.value) {
-                    let list = document.getElementById('ListOfUsers')
-                    let url = 'http://localhost:8080'+document.location.pathname+'users/'+search.value;
-
-
-		                    for(let i = list.children.length-1; i >= 0; i--) {
-		                        list.children[i].remove()
-		                    }
-
-                    searchModal.style.display = 'grid'
-                    document.getElementById('transparent-substrate').style.display = 'block'
-
-
-                    const request = new XMLHttpRequest()
-                    request.open('GET', url)
-                    request.setRequestHeader('Content-Type', 'application/x-www-form-url')
-
-
-                    request.addEventListener("readystatechange", () => {
-                    if (request.readyState === 4 && request.status === 200) {
-                        let data = JSON.parse(request.responseText).map(Object.values)
-                        for(let i = 0; i < data.length; i++) {
-                            let id = data[i][0]
-                            let username = data[i][1]
-                            let name = data[i][2]
-                            let avatar = data[i][3]
-                            list.innerHTML += '<fieldset class="user"><label>' + name + '</label><label>' + username + '</label></fieldset>'
-
-                        }
-                    }
-                });
-                request.send()
-
-                  }
-          },
-          error => {
-              console.log('rejected: ' + error)
-          }
-      );
-  }
-}
-
-
-
-
-	function scroller(){
-	    console.log('срабатывает скролл')
-		if(document.getElementById('nameOfModal')!='none') {
-			let inputWithNumberPage
-			let list
-			let window
-			const request = new XMLHttpRequest()
-			let url
-   			const percentDistanceForDownloadingData = 95
-			if(document.getElementById('nameOfModal').value=='modalFollowers') {
-				inputWithNumberPage = document.getElementById('numberPageFollowers')
-				list = document.getElementById('ListOfFollowers')
-				window = document.getElementById('ListOfFollowers')
-				url = 'http://localhost:8080'+document.location.pathname+'followers/'+document.getElementById('numberPageFollowers').value;
-			}
-			else if(document.getElementById('nameOfModal').value=='modalFollows'){
-				inputWithNumberPage = document.getElementById('numberPageFollows')
-				list = document.getElementById('ListOfFollows')
-				window = document.getElementById('modalFollows')
-				url = 'http://localhost:8080'+document.location.pathname+'follows/'+document.getElementById('numberPageFollows').value;
-			}
-			request.open('GET', url)
-			request.setRequestHeader('Content-Type', 'application/x-www-form-url')
-			console.log(window.scrollTop + ' > ' + (getMaxLengthScroll(window)/100*percentDistanceForDownloadingData))
-    		if(window.scrollTop > (getMaxLengthScroll(window)/100*percentDistanceForDownloadingData)) {
-    		    console.log('запрос отправлен!')
-        		request.send()
-        		window.onscroll = '';
-    		}
-
-
-    		request.addEventListener("readystatechange", () => {
-        		if (request.readyState === 4 && request.status === 200) {
-            		inputWithNumberPage.value = (Number.parseInt(inputWithNumberPage.value) + 1)
-            		let data = JSON.parse(request.responseText).map(Object.values)
-            		for(let i = 0; i < data.length; i++) {
-                		let id = data[i][0]
-                		let username = data[i][1]
-                		let name = data[i][2]
-                		let avatar = data[i][3]
-                		list.innerHTML += '<fieldset class="user"><label>' + name + '</label><label>' + username + '</label></fieldset>'
-            		}
-            		window.onscroll = scroller;
-        		}
-        	else {
-            window.onscroll = scroller;
-        	}
-    		})
-		}
-	}
-
-function getMaxLengthScroll(window) {
-    return Math.round(Math.round(window.scrollHeight) - Math.round(window.clientHeight))
-}
-
-function readyUsers() {
-    let inputWithNumberPage
-    let list
-    const request = new XMLHttpRequest()
-    let url
-
-    if(document.getElementById('nameOfModal').value==='modalFollowers') {
-		inputWithNumberPage = document.getElementById('numberPageFollowers')
-		list = document.getElementById('ListOfFollowers')
-		window = document.getElementById('modalFollowers')
-		url = 'http://localhost:8080'+document.location.pathname+'followers/'+document.getElementById('numberPageFollowers').value;
-	}
-	else if(document.getElementById('nameOfModal').value==='modalFollows'){
-		inputWithNumberPage = document.getElementById('numberPageFollows')
-		list = document.getElementById('ListOfFollows')
-		window = document.getElementById('modalFollows')
-		url = 'http://localhost:8080'+document.location.pathname+'follows/'+document.getElementById('numberPageFollowers').value;
-	}
-	request.open('GET', url)
-    request.setRequestHeader('Content-Type', 'application/x-www-form-url')
-
-    request.addEventListener("readystatechange", () => {
-        if (request.readyState === 4 && request.status === 200) {
-            let data = JSON.parse(request.responseText).map(Object.values)
-            for(let i = 0; i < data.length; i++) {
-                let id = data[i][0]
-                let username = data[i][1]
-                let name = data[i][2]
-                let avatar = data[i][3]
-                list.innerHTML += '<fieldset class="user"><label>' + name + '</label><label>' + username + '</label></fieldset>'
-            }
-            inputWithNumberPage.value = (Number.parseInt(inputWithNumberPage.value) + 1)
-        }
-    });
-    request.send()
-  }
-
-document.addEventListener('onbeforeunload', event => {
-    document.getElementById('numberPageFollows').value = ''
-    document.getElementById('numberPageFollowers').value = ''
-    document.getElementById('nameOfModal').value = 'none'
-})
-
-	document.onclick = function(e) {
-		let modalIsOpen = document.getElementById('modalIsOpen').value
-		let transparentSubstrate = document.getElementById('transparent-substrate')
-		if(e.target.id === 'transparent-substrate') {
-		    document.getElementById('searchModal').style.display = 'none'
-		    transparentSubstrate.style.display = 'none'
-		}
-		if(modalIsOpen==1) {
-			if(e.target.id === 'substrate') {
-			    if(document.getElementById('nameOfModal').value == 'modalFollowers') {
-			        closeFollowersModal();
-			    }
-			    else if(document.getElementById('nameOfModal').value == 'modalFollows') {
-			        closeFollowsModal();
-			    }
-			}
-		}
-	}
-
-
-	function openFollowsModal() {
-		const substrate = document.getElementById('substrate')
-		const window = document.getElementById('modalFollows')
-		substrate.style.display = 'block'
-		window.style.display = 'block'
-		document.getElementById('modalIsOpen').value = 1
-		document.getElementById('nameOfModal').value = 'modalFollows'
-		readyUsers()
-	}
-
-	function closeFollowsModal() {
-		const substrate = document.getElementById('substrate')
-		const window = document.getElementById('modalFollows')
-		substrate.style.display = 'none'
-		window.style.display = 'none'
-		listOfFollows = document.getElementById('ListOfFollows').children;
-		for(let i = listOfFollows.length-1; i >= 0; i--) {
-		    listOfFollows[i].remove()
-		}
-		document.getElementById('modalIsOpen').value = 0
-		document.getElementById('numberPageFollows').value = 0;
-		document.getElementById('nameOfModal').value = "none"
-	}
-
-	function openFollowersModal() {
-		const substrate = document.getElementById('substrate')
-		const window = document.getElementById('modalFollowers')
-		substrate.style.display = 'block'
-		window.style.display = 'block'
-		document.getElementById('modalIsOpen').value = 1
-		document.getElementById('nameOfModal').value = 'modalFollowers'
-		readyUsers()
-	}
-
-	function closeFollowersModal() {
-		const substrate = document.getElementById('substrate')
-		const window = document.getElementById('modalFollowers')
-		substrate.style.display = 'none'
-		window.style.display = 'none'
-		listOfFollowers = document.getElementById('ListOfFollowers').children
-
-		for(let i = listOfFollowers.length-1; i >= 0; i--) {
-		    listOfFollowers[i].remove()
-		}
-		document.getElementById('modalIsOpen').value = 0
-		document.getElementById('numberPageFollowers').value = 0;
-		document.getElementById('nameOfModal').value = "none"
-	}
-
-
-
-</script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script th:src="@{/js/personalProfile/Marking.js}" src="/js/personalProfile/Marking.js" type="text/javascript"></script>
+<script th:src="@{/js/personalProfile/ActionsWithPost.js}" src="/js/personalProfile/ActionsWithPost.js" type="text/javascript"></script>
+<script th:src="@{/js/personalProfile/Post.js}" src="/js/personalProfile/Post.js" type="text/javascript"></script>
+<script th:src="@{/js/personalProfile/PeopleSearch.js}" src="/js/personalProfile/PeopleSearch.js" type="text/javascript"></script>
+<script th:src="@{/js/personalProfile/Header.js}" src="/js/personalProfile/Header.js" type="text/javascript"></script>
+<script th:src="@{/js/personalProfile/FollowsFollowersMenu.js}" src="/js/personalProfile/FollowsFollowersMenu.js" type="text/javascript"></script>
+<script th:src="@{/js/personalProfile/Main.js}" src="/js/personalProfile/Main.js" type="text/javascript"></script>
 </body>
 </html>

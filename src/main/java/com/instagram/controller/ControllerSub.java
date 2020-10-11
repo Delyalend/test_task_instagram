@@ -15,11 +15,9 @@ public class ControllerSub {
     @Autowired
     private DaoSub daoSub;
 
-    @Autowired
-    private DaoUser daoUser;
 
     @PostMapping("/subscribe/{username}")
-    public String subscribeToUser(@PathVariable String username, Authentication authentication, Model model) {
+    public String subscribeToUser(@PathVariable String username, Authentication authentication) {
 
         daoSub.followToUserByUsername(username,authentication.getName());
 
@@ -27,7 +25,7 @@ public class ControllerSub {
     }
 
     @PostMapping("/unsubscribe/{username}")
-    public String unsubscribeToUser(@PathVariable String username, Authentication authentication, Model model) {
+    public String unsubscribeToUser(@PathVariable String username, Authentication authentication) {
 
         daoSub.unfollowUserByUsername(username,authentication.getName());
 

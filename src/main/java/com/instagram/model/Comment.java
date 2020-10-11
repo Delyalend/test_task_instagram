@@ -1,18 +1,19 @@
-package com.instagram.dto;
+package com.instagram.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DtoMessage {
+public class Comment {
     private Long id;
-    private Long ownerId;
-    private String content;
-    private String type;
-    private String date;
+    private User user;
+    private String text;
+    private Date date;
 }

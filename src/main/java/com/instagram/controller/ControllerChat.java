@@ -15,6 +15,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -49,11 +50,15 @@ public class ControllerChat {
     @MessageMapping("/stompChat.sendMessage/{chatId}")
     @SendTo("/topic/stompChat/{chatId}")
     @SneakyThrows
-    public String messageTransmitter(@Payload String msgJSON, @DestinationVariable Long chatId, Authentication auth) {
+    public @ResponseBody Message messageTransmitter(@Payload String msgJSON, @DestinationVariable Long chatId, Authentication auth) {
         Long iamId = daoUser.getUserByUsername(auth.getName()).getId();
         Message msg = mapper.readValue(msgJSON,Message.class);
-        serviceMessageHistory.saveMessage(chatId,iamId,msg.getContent(),msg.getType());
-        return msgJSON;
+        msg.setChatId(chatId);
+        msg.setOwnerId(iamId);
+
+        serviceMessageHistory.saveMessage(msg);
+        
+        return msg;
     }
 
 }
