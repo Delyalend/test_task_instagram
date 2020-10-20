@@ -28,13 +28,13 @@ public class ControllerDirect {
         return "direct";
     }
 
-//    @GetMapping("/direct/{username}")
-//    public String chatSelector(Authentication auth, @PathVariable String username, Model model) {
-//        User iam = daoUser.getUserByUsername(auth.getName());
-//        User opponent = daoUser.getUserByUsername(username);
-//        model.addAttribute("iam", iam);
-//        model.addAttribute("opponent", opponent);
-//        return "direct";
-//    }
+    @GetMapping("/direct/{username}")
+    public String chatSelector(Authentication auth, @PathVariable String username, Model model) {
+        User iam = daoUser.getUserByUsername(auth.getName());
+        User opponent = daoUser.getUserByUsername(username);
+        model.addAttribute("iam", iam);
+        model.addAttribute("opponent", opponent);
+        return "direct";
+    }
 
 }

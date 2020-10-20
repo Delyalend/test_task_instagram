@@ -50,10 +50,17 @@ public class DaoPostImpl implements DaoPost {
     private final String SELECT_COUNT_COMMENTS_BY_POST = "select count(*) from post_comment_db where post_id = ?";
 
     //language=SQL
-    private final String SELECT_POST_BY_ID = "select p_db.id as post_id, u_db.id as user_id, u_db.username,u_db.avatar, p_db.date, p_db.comment, i_db.src, i_db.type from post_db p_db " +
+    private final String SELECT_POST_BY_ID = "select p_db.id as post_id, u_db.id as user_id, u_db.username,u_db.avatar, p_db.date::timestamp, p_db.comment, i_db.src, i_db.type from post_db p_db " +
             "left join image_db i_db on i_db.post_id = p_db.id " +
             "left join user_db u_db on u_db.id = p_db.owner_id " +
             "where p_db.id = ?";
+
+    //language=SQL
+    private String SELECT_COUNT_POSTS = "select count(*) from post_db where owner_id = ?";
+
+    private RowMapper<Integer> ROW_MAPPER_TO_COUNT = (ResultSet resultSet, int rowNum) -> {
+        return resultSet.getInt("count");
+    };
 
     private RowMapper<Long> ROW_MAPPER_COUNT = (ResultSet resultSet, int rowNum) -> {
         return resultSet.getLong("count");
@@ -74,7 +81,7 @@ public class DaoPostImpl implements DaoPost {
                 .id(resultSet.getLong("post_id"))
                 .comment(resultSet.getString("comment"))
                 .owner(usr)
-                .date(resultSet.getDate("date"))
+                .date(resultSet.getTimestamp("date"))
                 .build();
     };
 
@@ -138,6 +145,13 @@ public class DaoPostImpl implements DaoPost {
         List<Image> images = jdbcTemplate.query(SELECT_IMAGE, ROW_MAPPER_IMAGE, post.getId());
         post.setImages(images);
         return post;
+    }
+
+
+
+    @Override
+    public int getCountPosts(Long userId) {
+        return jdbcTemplate.query(SELECT_COUNT_POSTS,ROW_MAPPER_TO_COUNT,userId).get(0);
     }
 
 }

@@ -512,6 +512,17 @@ grid-area:mark;
 	height: 32px;
 }
 
+.hrefForUsernamePost {
+    text-decoration: none;
+    color: black;
+}
+
+.hrefForUsernamePost:hover{
+    text-decoration: underline;
+}
+
+
+
 
 </style>
 
@@ -522,7 +533,7 @@ grid-area:mark;
     <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta charset="UTF-8">
-    <title th:text="${user.username}" id="username">username</title>
+    <title th:text="${userProfile.username}" id="username">username</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
@@ -531,14 +542,15 @@ grid-area:mark;
     <button class="rightArrowForImage" onclick="goToRightImage()" id="rightTransferArrowForImages">></button>
     <button class="leftArrowForImage" onclick="goToLeftImage()" id="leftTransferArrowForImages"><</button>
     <div class="buttonClosePostPanel" id="buttonClosePostPanel">X</div>
-    <div class="usernameForPostPanel">username</div>
+    <div class="usernameForPostPanel" id="usernameForPostPanel">username</div>
     <div class="line1"></div>
     <div class="line2"></div>
     <div class="line3"></div>
     <div class="line4"></div>
     <img class="iconForLikePost" src="https://i.ibb.co/Btgv7w1/like-favorite-heart-5759.png">
-    <img class="iconForSavePost" src="https://i.ibb.co/txZkRTR/2849790-book-bookmark-interface-media-multimedia-tab-107960.png">
-    <div class="dateForPost">08.10.2020</div>
+    <img class="iconForSavePost"
+         src="https://i.ibb.co/txZkRTR/2849790-book-bookmark-interface-media-multimedia-tab-107960.png">
+    <div class="dateForPost" id="dateForPost">08.10.2020</div>
     <textarea class="textAreaForComment" placeholder="Добавить комментарий..." rows="4" cols="20"></textarea>
     <button class="buttonPublishComment">Опубликовать</button>
     <div class="comments" id="postComments"></div>
@@ -552,7 +564,7 @@ grid-area:mark;
 <div class="container-1 top-color">
     <img class="icon" src="https://i.ibb.co/84TX9S2/735145cfe0a4.png">
 
-    <input class="search"  id="search" onkeyup="onKeyUp()" value="" onfocus="searchInFocus()">
+    <input class="search" id="search" onkeyup="onKeyUp()" value="" onfocus="searchInFocus()">
 
     <!--Поиск-->
     <div class="modalSearch" id="searchModal" onblur="closeModalSearch()">
@@ -583,7 +595,6 @@ grid-area:mark;
     </div>
 
 
-
     <div class="transparent-substrate" id="transparent-substrate"></div>
 
     <input type="button" class="home">
@@ -600,12 +611,16 @@ grid-area:mark;
         <label for="profileIcon"><img src="https://i.ibb.co/nsGxBpj/user-1.png"></label>
         <input type="file" class="profileIcon" id="profileIcon">
     </div>
-    <label class="username font">danilLevchenko</label>
+    <div class="username font" th:text="${userProfile.username}">username</div>
     <input type="button" value="Редактировать профиль" class="editProfile">
-    <label class="publications">x публикаций</label>
-    <label class="followers element-to-center" onclick="openFollowersModal()">x подписчиков</label>
-    <label class="follows element-to-end" onclick="openFollowsModal()">x подписок</label>
-    <label class="name">danil</label>
+    <div class="publications" th:text="${userProfile.countPosts}"></div>
+    <label>Публикаций</label>
+    <div class="followers element-to-center" onclick="openFollowersModal()"
+         th:text="${userProfile.countFollowers}"></div>
+    <label>Подписчиков</label>
+    <div class="follows element-to-end" onclick="openFollowsModal()" th:text="${userProfile.countFollows}"></div>
+    <label>Подписок</label>
+    <div class="name" th:text="${userProfile.name}">name</div>
 </div>
 
 <hr class="main-color">
@@ -613,20 +628,23 @@ grid-area:mark;
 <div class="substrate" id="substrateForPostInfo"></div>
 
 
-<div class="postPanel">
-    <div class="publications">
-        <button onclick="showPublications()">Публикации</button>
-    </div>
-    <div class="post">
-        <button onclick="showCreationPostMenu()">Сделать пост</button>
-    </div>
-    <div class="saved">
-        <button onclick="showSaved()">Сохраненное</button>
-    </div>
-    <div class="mark">
-        <button onclick="showMarks()">Отметки</button>
+<div th:if="${isOwnerPage}">
+    <div class="postPanel">
+        <div class="publications">
+            <button onclick="showPublications()">Публикации</button>
+        </div>
+        <div class="post">
+            <button onclick="showCreationPostMenu()">Сделать пост</button>
+        </div>
+        <div class="saved">
+            <button onclick="showSaved()">Сохраненное</button>
+        </div>
+        <div class="mark">
+            <button onclick="showMarks()">Отметки</button>
+        </div>
     </div>
 </div>
+
 
 <!--Меню публикаций-->
 <div id="publicationsMenu">
@@ -639,11 +657,11 @@ grid-area:mark;
 <div id="creationPostMenu">
     <div>
         <div>
-            <button  onclick="showPhotoPanel()">Фото</button>
-            <button  onclick="showVideoPanel()">Видео</button>
+            <button onclick="showPhotoPanel()">Фото</button>
+            <button onclick="showVideoPanel()">Видео</button>
             <div id="photoPanel">
 
-                <input type="file" name="photo" accept="image/jpeg,image/png" id="imgInp" >
+                <input type="file" name="photo" accept="image/jpeg,image/png" id="imgInp">
 
                 <form id="photos">
                     <img id="blah" src="#" alt="your image" height="500px" width="500px">
@@ -685,13 +703,25 @@ grid-area:mark;
 <input hidden="hidden" value="0" id="modalIsOpen">
 <input hidden="hidden" value="none" id="nameOfModal">
 
+<button onclick="testClick()">ФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФ</button>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script th:src="@{/js/libs/date.js}" src="/js/libs/date.js" type="text/javascript"></script>
 <script th:src="@{/js/personalProfile/Marking.js}" src="/js/personalProfile/Marking.js" type="text/javascript"></script>
-<script th:src="@{/js/personalProfile/ActionsWithPost.js}" src="/js/personalProfile/ActionsWithPost.js" type="text/javascript"></script>
+<script th:src="@{/js/personalProfile/ActionsWithPost.js}" src="/js/personalProfile/ActionsWithPost.js"
+        type="text/javascript"></script>
 <script th:src="@{/js/personalProfile/Post.js}" src="/js/personalProfile/Post.js" type="text/javascript"></script>
-<script th:src="@{/js/personalProfile/PeopleSearch.js}" src="/js/personalProfile/PeopleSearch.js" type="text/javascript"></script>
+<script th:src="@{/js/personalProfile/PeopleSearch.js}" src="/js/personalProfile/PeopleSearch.js"
+        type="text/javascript"></script>
 <script th:src="@{/js/personalProfile/Header.js}" src="/js/personalProfile/Header.js" type="text/javascript"></script>
-<script th:src="@{/js/personalProfile/FollowsFollowersMenu.js}" src="/js/personalProfile/FollowsFollowersMenu.js" type="text/javascript"></script>
+<script th:src="@{/js/personalProfile/FollowsFollowersMenu.js}" src="/js/personalProfile/FollowsFollowersMenu.js"
+        type="text/javascript"></script>
 <script th:src="@{/js/personalProfile/Main.js}" src="/js/personalProfile/Main.js" type="text/javascript"></script>
 </body>
+    <script th:inline="javascript">
+        function testClick() {
+            console.log([[${userProfile.id}]])
+        }
+    </script>
 </html>

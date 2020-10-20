@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -17,5 +17,6 @@ public class Post {
     private List<Image> images;
     private String comment;
     private User owner;
-    private Date date;
+    private Timestamp date;
+
 }

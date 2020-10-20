@@ -1,10 +1,11 @@
 package com.instagram.controller;
 
-import com.instagram.dao.DaoSub;
-import com.instagram.dao.DaoUser;
 import com.instagram.dto.DtoUserForSubs;
 import com.instagram.model.User;
-import lombok.SneakyThrows;
+import com.instagram.model.UserProfile;
+import com.instagram.service.ServicePageTitle;
+import com.instagram.service.ServiceSubscription;
+import com.instagram.service.ServiceUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,47 +22,35 @@ import java.util.List;
 public class ControllerAccount {
 
     @Autowired
-    private DaoUser daoUser;
+    private ServiceUser serviceUser;
 
     @Autowired
-    private DaoSub daoSub;
+    private ServicePageTitle servicePageTitle;
+
+    @Autowired
+    private ServiceSubscription serviceSubscription;
 
     @GetMapping("/{username}/")
-    public String getAccountProfile(@PathVariable String username, Model model, Authentication authentication) throws Exception {
-
-        User user = daoUser.getUserByUsername(username);
-
-        if(user == null) {
-            throw new Exception("user is not found");
+    public String getUserProfile(@PathVariable String username, Model model, Authentication auth) throws Exception {
+        UserProfile userProfile = serviceUser.getUserProfile(username, auth);
+        String titlePage = servicePageTitle.getPageTitle(userProfile.getUsername(), userProfile.getName());
+        boolean isOwnerPage = userProfile.getUsername().equals(auth.getName());
+        if (!isOwnerPage) {
+            boolean isFollower = serviceUser.isFollower(auth.getName(), userProfile.getUsername());
+            model.addAttribute("isFollower", isFollower);
         }
-
-        model.addAttribute("user", user);
-
-        if (user.getUsername().equals(authentication.getName())) {
-            return "personalProfile";
-        }
-
-        String title;
-        if (user.getName().equals("")) {
-            title = "@" + user.getUsername() + " · Фото и видео в Instagram";
-        } else {
-            title = user.getName() + " (@" + user.getUsername() + ") · Фото и видео в Instagram";
-        }
-        model.addAttribute("title", title);
-
-
-        model.addAttribute("isSub", daoSub.isFollower(authentication.getName(), user.getUsername()));
-
-
-        return "profile";
+        model.addAttribute("isOwnerPage", isOwnerPage);
+        model.addAttribute("titlePage", titlePage);
+        model.addAttribute("userProfile", userProfile);
+        return "userProfile";
     }
 
     @GetMapping("/{username}/follows/{page}")
     public @ResponseBody
-    List<DtoUserForSubs> getMoreFollows(@PathVariable int page, Authentication authentication) {
-        User iam = daoUser.getUserByUsername(authentication.getName());
+    List<DtoUserForSubs> getFollows(@PathVariable int page, Authentication authentication) {
+        User iam = serviceUser.getUserByUsername(authentication.getName());
 
-        List<User> usersFromDb = daoSub.findFollowsByFollowerId(iam.getId(), page);
+        List<User> usersFromDb = serviceSubscription.findFollowsByFollowerId(iam.getId(), page);
 
         List<DtoUserForSubs> users = new ArrayList();
         for (int i = 0; i < usersFromDb.size(); i++) {
@@ -78,29 +68,30 @@ public class ControllerAccount {
 
     @GetMapping("/{username}/followers/{page}")
     public @ResponseBody
-    List<DtoUserForSubs> getMoreFollowers(@PathVariable int page, Authentication authentication) {
+    List<DtoUserForSubs> getFollowers(@PathVariable int page, Authentication authentication) {
 
-        User iam = daoUser.getUserByUsername(authentication.getName());
+        User iam = serviceUser.getUserByUsername(authentication.getName());
 
-        List<User> usersFromDb = daoSub.findFollowersByFollowId(iam.getId(), page);
+        List<User> followers = serviceSubscription.findFollowersByFollowId(iam.getId(), page);
 
         List<DtoUserForSubs> users = new ArrayList();
-        for (int i = 0; i < usersFromDb.size(); i++) {
-            DtoUserForSubs user = new DtoUserForSubs();
-            user.setId(usersFromDb.get(i).getId());
-            user.setName(usersFromDb.get(i).getName());
-            user.setUsername(usersFromDb.get(i).getUsername());
-            user.setAvatar(usersFromDb.get(i).getAvatar());
-            users.add(user);
-        }
+
+        followers.forEach(follower -> {
+            DtoUserForSubs usr = new DtoUserForSubs();
+            usr.setId(follower.getId());
+            usr.setName(follower.getName());
+            usr.setUsername(follower.getUsername());
+            usr.setAvatar(follower.getAvatar());
+            users.add(usr);
+        });
 
         return users;
     }
 
     @GetMapping("/{username}/users/{text}")
     public @ResponseBody
-    List<DtoUserForSubs> getMoreUsers(@PathVariable String text, Authentication authentication) {
-        User iam = daoUser.getUserByUsername(authentication.getName());
+    List<DtoUserForSubs> getUsers(@PathVariable String text, Authentication authentication) {
+        User iam = serviceUser.getUserByUsername(authentication.getName());
 
         //List<User> usersFromDb = daoSub.findUsersByNameOrUsername(iam.getId(),text);//нужен специальный сервис!
         List<User> usersFromDb = new ArrayList<>();

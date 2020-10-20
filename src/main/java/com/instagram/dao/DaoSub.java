@@ -14,4 +14,7 @@ public interface DaoSub {
     List<User> findFollowersByFollowId(Long followId, int page);
     List<User> findFollowsByFollowerId(Long followerId, int page);
 
+    int getCountFollowers(Long userId);
+    int getCountFollows(Long userId);
+
 }

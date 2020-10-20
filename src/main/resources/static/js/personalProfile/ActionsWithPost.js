@@ -30,7 +30,6 @@ let currentImageForPublications
 let currentPostForPublications
 
 function openPostPanel(post) {
-    console.log(post)
     let divImages = document.getElementById('images')
 	document.getElementById('substrateForPostInfo').style.display = 'block'
     document.getElementById('postInfo').style.display = 'grid'
@@ -47,6 +46,15 @@ function openPostPanel(post) {
         displayTransferButtonsForImages(post)
         getCommentsForCurPostFromServer()
     }
+    //Set username
+    let username = document.getElementById('usernameForPostPanel')
+    let href = 'http://localhost:8080/' + post.owner.username + '/'
+    username.innerHTML = '<a class="hrefForUsernamePost" href="'+ href +'">' + post.owner.username + '</a>'
+
+    //Set date
+    let date = new Date(post.date);
+    document.getElementById('dateForPost').innerHTML = date.toLocaleString()
+
 }
 
 function getCommentsForCurPostFromServer() {

@@ -11,4 +11,5 @@ public interface DaoPost {
     void addCommentToPost(Long commentId, Long postId);
     List<DtoPostPreview> getDtoPostsPreview(Long userId, Long postOffset, Long count);
     Post getPostById(Long postId);
+    int getCountPosts(Long userId);
 }

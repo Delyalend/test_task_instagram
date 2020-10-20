@@ -14,5 +14,4 @@
 # Maven
 log/
 target/
-/src/main/resources/db.properties
-/src/main/resources/aws.properties
+
